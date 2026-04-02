@@ -2,486 +2,61 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Piura Family Found</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<title>PFF Debug</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#080808;--bg2:#111;--bg3:#181818;--bg4:#222;
-  --border:#252525;--text:#fff;--text2:#aaa;--text3:#555;
-  --blue:#3b82f6;--green:#22c55e;--red:#ef4444;
-}
-html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
-
-.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:32px 40px 28px;display:flex;align-items:flex-end;justify-content:space-between}
-.logo{font-size:56px;font-weight:900;letter-spacing:-2px;line-height:1}
-.logo .fam{color:var(--blue)}
-.header-meta{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.upd{font-size:13px;color:var(--text3)}
-.btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:12px 26px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
-.btn:hover{background:#2563eb}
-.btn.loading{opacity:.5;pointer-events:none}
-
-.wrap{padding:32px 40px;display:flex;flex-direction:column;gap:32px;max-width:1440px;margin:0 auto}
-
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.metric{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:28px 30px}
-.ml{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
-.mv{font-size:44px;font-weight:900;line-height:1;letter-spacing:-1px}
-.ms{font-size:14px;color:var(--text2);margin-top:8px}
-.badge{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:.05em}
-.bg{background:rgba(34,197,94,.15);color:var(--green)}
-.bb{background:rgba(59,130,246,.15);color:var(--blue)}
-
-.sec-title{font-size:24px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.sec-title::before{content:'';width:4px;height:26px;background:var(--blue);border-radius:2px;display:block}
-
-.types-grid{display:grid;grid-template-columns:1fr 380px;gap:20px}
-.types-list{display:flex;flex-direction:column;gap:12px}
-.type-row{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;align-items:center;gap:16px}
-.tdot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
-.tinfo{flex:1}
-.tname{font-size:16px;font-weight:700}
-.tstats{display:flex;gap:20px;margin-top:6px}
-.tstat{font-size:13px;color:var(--text2)}
-.tstat b{color:var(--text);font-weight:700}
-.tpct{font-size:14px;font-weight:800;padding:5px 12px;border-radius:8px;white-space:nowrap}
-
-.chart-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:26px;display:flex;flex-direction:column;align-items:center;gap:16px}
-.legend{display:flex;flex-direction:column;gap:8px;width:100%}
-.li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2)}
-.ld{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-.lp{margin-left:auto;color:var(--text);font-weight:700}
-
-.goals-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.goals-list{display:flex;flex-direction:column;gap:10px}
-.goal-row{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:14px}
-.gdot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
-.gname{flex:1;font-size:15px;font-weight:600}
-.gcur{font-size:13px;color:var(--text3);min-width:90px;text-align:right}
-.ginp-wrap{display:flex;align-items:center;gap:6px}
-.gsign{color:var(--text3);font-size:14px;font-weight:700}
-.ginp{background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-weight:700;padding:8px 12px;width:120px;outline:none}
-.ginp:focus{border-color:var(--blue)}
-
-.reb-list{display:flex;flex-direction:column;gap:14px}
-.reb-row{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:22px 24px}
-.reb-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.rdot{width:13px;height:13px;border-radius:50%;flex-shrink:0}
-.rname{font-size:16px;font-weight:700;flex:1}
-.rind{font-size:12px;font-weight:800;padding:5px 14px;border-radius:20px}
-.ibuy{background:rgba(34,197,94,.15);color:var(--green)}
-.isell{background:rgba(239,68,68,.15);color:var(--red)}
-.iok{background:rgba(59,130,246,.15);color:var(--blue)}
-.reb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.rs-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
-.rs-val{font-size:24px;font-weight:800}
-.rs-sub{font-size:12px;color:var(--text3);margin-top:3px}
-.bar-bg{height:7px;background:var(--bg4);border-radius:4px;margin-top:10px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;transition:width .7s ease}
-
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.93);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:18px}
-.spin{width:48px;height:48px;border:3px solid #222;border-top-color:var(--blue);border-radius:50%;animation:sp .8s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-.ltxt{font-size:16px;color:var(--text2)}
-.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:18px;color:var(--red);font-size:14px}
+body{background:#0a0a0a;color:#fff;font-family:monospace;padding:24px}
+pre{background:#111;border:1px solid #222;border-radius:8px;padding:16px;overflow:auto;font-size:12px;line-height:1.6;white-space:pre-wrap;word-break:break-all}
+h2{color:#3b82f6;margin:16px 0 8px}
+button{background:#3b82f6;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:14px;margin-bottom:20px}
 </style>
 </head>
 <body>
-
-<div class="overlay" id="ov">
-  <div class="spin"></div>
-  <div class="ltxt">Загружаем данные…</div>
-</div>
-
-<div class="header">
-  <div class="logo">Piura <span class="fam">Family</span> Found</div>
-  <div class="header-meta">
-    <span class="upd" id="upd">—</span>
-    <button class="btn" id="rbtn" onclick="loadData()">↻ Обновить</button>
-  </div>
-</div>
-
-<div class="wrap">
-  <div id="err" style="display:none" class="err"></div>
-  <div class="metrics" id="metrics"></div>
-
-  <div>
-    <div class="sec-title">Активы по типам</div>
-    <div class="types-grid">
-      <div class="types-list" id="tlist"></div>
-      <div class="chart-box">
-        <div style="position:relative;width:280px;height:280px"><canvas id="c_pie"></canvas></div>
-        <div class="legend" id="leg"></div>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <div class="sec-title">Цели по типам</div>
-    <div class="goals-grid">
-      <div class="goals-list" id="glist"></div>
-      <div class="chart-box" style="justify-content:center">
-        <div style="position:relative;width:100%;height:320px"><canvas id="c_goals"></canvas></div>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <div class="sec-title">Ребалансировка</div>
-    <div class="reb-list" id="rlist"></div>
-  </div>
-
-  <div style="text-align:center;padding:20px 0;font-size:12px;color:var(--text3)">
-    Piura Family Found · Данные из Google Sheets · Автообновление каждые 5 мин
-  </div>
-</div>
+<h1 style="color:#fff;margin-bottom:16px">PFF Debug — структура данных</h1>
+<button onclick="load()">Загрузить данные</button>
+<h2>Первые 5 строк листа 2026 (PFF) — все ключи и значения:</h2>
+<pre id="out">Нажми кнопку...</pre>
 
 <script>
 const API = 'https://script.google.com/macros/s/AKfycbyGRwLrCvO4MxYZOssBDIwMONBTZA1yOrJ1OekFTX3rVnjqbvLb0XI8d1ngDybRHrZs/exec';
 
-// Цвета для 6 типов (по значению поля ТИП из таблицы)
-const TYPE_META = {
-  'Счета, вклады и нал':  { id:'bank',   color:'#3b82f6' },
-  'Инвест. недвижимость': { id:'realty', color:'#f59e0b' },
-  'Золото':               { id:'gold',   color:'#eab308' },
-  'Фондовый рынок':       { id:'market', color:'#22c55e' },
-  'Займы/бизнес':         { id:'loans',  color:'#a855f7' },
-  'Крипта/проекты':       { id:'crypto', color:'#06b6d4' },
-};
-
-// Порядок отображения
-const TYPES = [
-  { key:'Счета, вклады и нал',  id:'bank',   name:'Счета, вклады и нал',  color:'#3b82f6' },
-  { key:'Инвест. недвижимость', id:'realty', name:'Инвест. недвижимость', color:'#f59e0b' },
-  { key:'Золото',               id:'gold',   name:'Золото',               color:'#eab308' },
-  { key:'Фондовый рынок',       id:'market', name:'Фондовый рынок',       color:'#22c55e' },
-  { key:'Займы/бизнес',         id:'loans',  name:'Займы / бизнес',       color:'#a855f7' },
-  { key:'Крипта/проекты',       id:'crypto', name:'Крипта / проекты',     color:'#06b6d4' },
-];
-
-let charts = [];
-let _td = null, _total = 0;
-
-function pm(v) {
-  if (v === null || v === undefined || v === '' || v === '-') return 0;
-  const n = parseFloat(String(v).replace(/[$\s,\u00a0\u202f%]/g,'').replace(',','.'));
-  return isNaN(n) ? 0 : n;
-}
-function fmt(n) {
-  if (!n && n !== 0) return '$0';
-  n = Math.round(n);
-  if (Math.abs(n) >= 1000000) return '$'+(n/1000000).toFixed(2)+'M';
-  if (Math.abs(n) >= 1000) return '$'+n.toLocaleString('ru');
-  return '$'+n;
-}
-function fp(n) { return n ? n.toFixed(1)+'%' : '0%'; }
-function loadGoals() { try { return JSON.parse(localStorage.getItem('pff_g')||'{}'); } catch(e) { return {}; } }
-function saveGoal(id,v) { const g=loadGoals(); g[id]=v; localStorage.setItem('pff_g',JSON.stringify(g)); }
-
-async function loadData() {
-  document.getElementById('rbtn').classList.add('loading');
-  document.getElementById('ov').style.display='flex';
-  document.getElementById('err').style.display='none';
+async function load() {
+  document.getElementById('out').textContent = 'Загружаю...';
   try {
-    const r = await fetch(API+'?t='+Date.now());
-    if (!r.ok) throw new Error('HTTP '+r.status);
+    const r = await fetch(API + '?t=' + Date.now());
     const data = await r.json();
-    process(data);
-    document.getElementById('upd').textContent = 'Обновлено: '+new Date().toLocaleString('ru');
+
+    const pffKey = Object.keys(data).find(k => k === '2026 (PFF)');
+    const rows = data[pffKey] || [];
+
+    let out = `Лист найден: "${pffKey}"\nВсего строк: ${rows.length}\n\n`;
+
+    // Показываем первые 8 строк с данными (не пустых)
+    let shown = 0;
+    for (let i = 0; i < rows.length && shown < 8; i++) {
+      const row = rows[i];
+      const keys = Object.keys(row);
+      const vals = Object.values(row);
+
+      // Берём только непустые строки
+      const hasData = vals.some(v => v !== '' && v !== null && v !== undefined && v !== 0);
+      if (!hasData) continue;
+
+      out += `=== Строка ${i} ===\n`;
+      keys.forEach((k, idx) => {
+        const v = row[k];
+        if (v !== '' && v !== null && v !== undefined) {
+          out += `  ключ[${idx}] "${k}" = ${JSON.stringify(v)}\n`;
+        }
+      });
+      out += '\n';
+      shown++;
+    }
+
+    document.getElementById('out').textContent = out;
   } catch(e) {
-    const eb = document.getElementById('err');
-    eb.style.display='block';
-    eb.textContent='Ошибка: '+e.message;
-  } finally {
-    document.getElementById('ov').style.display='none';
-    document.getElementById('rbtn').classList.remove('loading');
+    document.getElementById('out').textContent = 'Ошибка: ' + e.message;
   }
 }
-
-function process(data) {
-  // ── Лист 2026 (PFF) ──
-  // Структура каждой строки: ключи = [" " (актив), "" (тип/закрытие/...), числовые ключи-даты, ...]
-  // По скриншоту: col[0]=АКТИВ, col[1]=ТИП, col[2]=ДОК(дата), col[3]=СУММА, col[4]=%, col[5]=МЕСЯЦ, col[6]=НЕДЕЛЯ
-  const pffKey = Object.keys(data).find(k => k === '2026 (PFF)');
-  const rows = pffKey ? data[pffKey] : [];
-
-  // Инициализация аккумуляторов по типам
-  const acc = {};
-  TYPES.forEach(t => { acc[t.key] = { summa:0, mes:0, ned:0, pctSum:0, pctCount:0 }; });
-
-  let parsedCount = 0;
-
-  rows.forEach(row => {
-    const keys = Object.keys(row);
-    if (keys.length < 2) return;
-
-    // Ключ 0 = имя актива ("    " = 4 пробела)
-    const nameKey = keys[0];
-    const name = String(row[nameKey] || '').trim();
-    if (!name || name === 'АКТИВ' || name === 'ИТОГО' || name === '') return;
-
-    // Ключ 1 = ТИП
-    const typeKey = keys[1];
-    const typRaw = String(row[typeKey] || '').trim();
-
-    // Ищем соответствие типу (полное или частичное)
-    let matchedType = null;
-    for (const t of TYPES) {
-      if (typRaw === t.key || typRaw.includes(t.key) || t.key.includes(typRaw)) {
-        matchedType = t.key;
-        break;
-      }
-    }
-    // Нечёткое совпадение
-    if (!matchedType) {
-      const tl = typRaw.toLowerCase();
-      if (tl.includes('счет') || tl.includes('вклад') || tl.includes('нал')) matchedType = 'Счета, вклады и нал';
-      else if (tl.includes('недвиж') || tl.includes('реалти')) matchedType = 'Инвест. недвижимость';
-      else if (tl.includes('золот') || tl.includes('gold')) matchedType = 'Золото';
-      else if (tl.includes('фондов') || tl.includes('рынок')) matchedType = 'Фондовый рынок';
-      else if (tl.includes('займ') || tl.includes('бизнес')) matchedType = 'Займы/бизнес';
-      else if (tl.includes('крипт') || tl.includes('проект')) matchedType = 'Крипта/проекты';
-    }
-    if (!matchedType) return; // строка без типа — пропускаем
-
-    // Собираем все числовые значения из строки (пропуская ключи-даты и пустые)
-    const nums = [];
-    for (let i = 2; i < keys.length; i++) {
-      const v = row[keys[i]];
-      if (v === '' || v === null || v === undefined || v === '-') continue;
-      // Пропускаем ISO-даты
-      if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) continue;
-      if (typeof v === 'string' && v.includes('T') && v.length > 15) continue;
-      const n = pm(v);
-      if (!isNaN(n)) nums.push(n);
-    }
-
-    // По порядку колонок: СУММА (большое), % (0..1 или %), МЕСЯЦ, НЕДЕЛЯ
-    // СУММА: первое число > 100
-    // %: первое число 0-1 (если < 1) или 0-100 (если помечен как %)
-    // МЕСЯЦ: число после суммы в диапазоне 0..50000
-    // НЕДЕЛЯ: следующее число
-    let summa=0, pct=0, mes=0, ned=0;
-    let stage = 0; // 0=ищем сумму, 1=ищем %, 2=ищем месяц, 3=ищем неделю
-
-    for (const n of nums) {
-      if (stage === 0) {
-        // Сумма — крупное число > 100
-        if (Math.abs(n) >= 100) { summa = n; stage = 1; }
-      } else if (stage === 1) {
-        // % — либо дробное 0..1, либо целое 0..100
-        if (Math.abs(n) <= 1 && n !== 0) { pct = n * 100; stage = 2; }
-        else if (Math.abs(n) > 0 && Math.abs(n) <= 100) { pct = n; stage = 2; }
-        else { stage = 2; } // пропускаем если не похоже на %
-      } else if (stage === 2) {
-        // МЕСЯЦ — разумный доход, меньше суммы
-        if (Math.abs(n) > 0 && Math.abs(n) < summa) { mes = n; stage = 3; }
-      } else if (stage === 3) {
-        // НЕДЕЛЯ
-        if (Math.abs(n) > 0) { ned = n; break; }
-      }
-    }
-
-    if (summa > 0) {
-      acc[matchedType].summa += summa;
-      acc[matchedType].mes += mes;
-      acc[matchedType].ned += ned;
-      if (pct > 0) { acc[matchedType].pctSum += pct; acc[matchedType].pctCount++; }
-      parsedCount++;
-    }
-  });
-
-  // Если ничего не распарсили — используем СТАТ
-  const stat = data['2026 (СТАТ)'] || [];
-  const totalSumma = parsedCount > 0
-    ? TYPES.reduce((a,t)=>a+acc[t.key].summa, 0)
-    : (stat[1] ? pm(stat[1]['']) || 819452 : 819452);
-  const totalMes = parsedCount > 0
-    ? TYPES.reduce((a,t)=>a+acc[t.key].mes, 0)
-    : (stat[6] ? pm(stat[6]['']) || 9380 : 9380);
-  const totalNed = totalMes / 4.33;
-  const avgPct = stat[5] ? pm(stat[5][''])*100 : (stat[4] ? pm(stat[4][''])*100 : 13.74);
-
-  // Строим td
-  const td = {};
-  TYPES.forEach(t => {
-    const a = acc[t.key];
-    td[t.id] = {
-      summa: a.summa,
-      mes:   a.mes,
-      ned:   a.ned,
-      pct:   a.pctCount > 0 ? a.pctSum/a.pctCount : (a.summa > 0 && a.mes > 0 ? a.mes*12/a.summa*100 : 0)
-    };
-  });
-
-  _td = td; _total = totalSumma;
-
-  renderMetrics(totalSumma, totalMes, totalNed, avgPct || 13.74);
-  renderTypes(td, totalSumma);
-  renderGoals(td, totalSumma);
-  renderRebalance(td, totalSumma);
-}
-
-function renderMetrics(total, mes, ned, pct) {
-  document.getElementById('metrics').innerHTML = `
-  <div class="metric">
-    <div class="ml">Портфель</div>
-    <div class="mv">${fmt(total)}</div>
-    <div class="ms">активы фонда</div>
-  </div>
-  <div class="metric">
-    <div class="ml">Доход / месяц</div>
-    <div class="mv">${fmt(mes)}</div>
-    <div class="badge bg">пассивный</div>
-  </div>
-  <div class="metric">
-    <div class="ml">Доход / неделя</div>
-    <div class="mv">${fmt(ned)}</div>
-    <div class="ms">~${fmt(mes*12)} / год</div>
-  </div>
-  <div class="metric">
-    <div class="ml">Средняя ставка</div>
-    <div class="mv">${pct.toFixed(1)}%</div>
-    <div class="badge bb">годовых</div>
-  </div>`;
-}
-
-function renderTypes(td, total) {
-  document.getElementById('tlist').innerHTML = TYPES.map(t => {
-    const d = td[t.id];
-    const pc = d.pct;
-    const clr = pc >= 30 ? '#a855f7' : pc >= 15 ? '#22c55e' : pc >= 5 ? '#3b82f6' : '#555';
-    return `<div class="type-row">
-      <div class="tdot" style="background:${t.color}"></div>
-      <div class="tinfo">
-        <div class="tname">${t.name}</div>
-        <div class="tstats">
-          <div class="tstat">Сумма: <b>${fmt(d.summa)}</b></div>
-          <div class="tstat">Доход: <b>${fmt(d.mes)}/мес</b></div>
-        </div>
-      </div>
-      <div class="tpct" style="background:${clr}22;color:${clr}">${fp(pc)}</div>
-    </div>`;
-  }).join('');
-
-  charts.forEach(c=>c.destroy()); charts=[];
-  const vals = TYPES.map(t=>td[t.id].summa);
-  const ctx = document.getElementById('c_pie');
-  if (ctx) {
-    charts.push(new Chart(ctx,{
-      type:'doughnut',
-      data:{labels:TYPES.map(t=>t.name),datasets:[{data:vals,backgroundColor:TYPES.map(t=>t.color),borderWidth:3,borderColor:'#111'}]},
-      options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>` ${x.label}: ${fmt(x.raw)} (${total>0?(x.raw/total*100).toFixed(1):0}%)`}}}}
-    }));
-  }
-  document.getElementById('leg').innerHTML = TYPES.map(t=>{
-    const sh = total>0?(td[t.id].summa/total*100):0;
-    return `<div class="li"><div class="ld" style="background:${t.color}"></div><span>${t.name}</span><span class="lp">${sh.toFixed(1)}%</span></div>`;
-  }).join('');
-}
-
-function renderGoals(td, total) {
-  const goals = loadGoals();
-  document.getElementById('glist').innerHTML = TYPES.map(t=>{
-    const d = td[t.id];
-    const gv = goals[t.id]||'';
-    return `<div class="goal-row">
-      <div class="gdot" style="background:${t.color}"></div>
-      <div class="gname">${t.name}</div>
-      <div class="gcur">${fmt(d.summa)}</div>
-      <div class="ginp-wrap">
-        <span class="gsign">$</span>
-        <input class="ginp" type="number" placeholder="0" value="${gv}"
-          onchange="saveGoal('${t.id}',parseFloat(this.value)||0);refreshGoals();refreshReb()">
-      </div>
-    </div>`;
-  }).join('');
-  drawGoalsChart();
-}
-
-function drawGoalsChart() {
-  const goals = loadGoals();
-  const old = charts.find(c=>c.canvas&&c.canvas.id==='c_goals');
-  if (old){old.destroy();charts=charts.filter(c=>c!==old);}
-  const ctx = document.getElementById('c_goals');
-  if (!ctx||!_td) return;
-  charts.push(new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels:TYPES.map(t=>t.name.length>15?t.name.slice(0,15)+'…':t.name),
-      datasets:[
-        {label:'Факт',data:TYPES.map(t=>_td[t.id].summa),backgroundColor:TYPES.map(t=>t.color+'cc'),borderRadius:6},
-        {label:'Цель',data:TYPES.map(t=>parseFloat(goals[t.id])||0),backgroundColor:TYPES.map(t=>t.color+'33'),borderColor:TYPES.map(t=>t.color),borderWidth:2,borderRadius:6}
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#888',font:{size:13}}},tooltip:{callbacks:{label:x=>` ${x.dataset.label}: ${fmt(x.raw)}`}}},
-      scales:{
-        x:{ticks:{color:'#555',font:{size:11}},grid:{color:'#1a1a1a'}},
-        y:{ticks:{color:'#555',font:{size:11},callback:v=>fmt(v)},grid:{color:'#1a1a1a'}}
-      }
-    }
-  }));
-}
-
-function renderRebalance(td, total) {
-  const goals = loadGoals();
-  const gTotal = TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
-  document.getElementById('rlist').innerHTML = TYPES.map(t=>{
-    const d = td[t.id];
-    const curPct = total>0?(d.summa/total*100):0;
-    const gAmt = parseFloat(goals[t.id])||0;
-    const gPct = gTotal>0?(gAmt/gTotal*100):0;
-    const delta = gAmt>0?(d.summa-gAmt):0;
-    const deltaPct = gAmt>0?((d.summa-gAmt)/gAmt*100):0;
-    const maxP = Math.max(curPct,gPct,1);
-    let indCls,indTxt;
-    if (gAmt===0){indCls='iok';indTxt='Цель не задана';}
-    else if (delta<-gAmt*0.05){indCls='ibuy';indTxt='↑ Докупить';}
-    else if (delta>gAmt*0.05){indCls='isell';indTxt='↓ Сократить';}
-    else{indCls='iok';indTxt='✓ В норме';}
-    return `<div class="reb-row">
-      <div class="reb-head">
-        <div class="rdot" style="background:${t.color}"></div>
-        <div class="rname">${t.name}</div>
-        <div class="rind ${indCls}">${indTxt}</div>
-      </div>
-      <div class="reb-stats">
-        <div>
-          <div class="rs-label">Текущее</div>
-          <div class="rs-val" style="color:${t.color}">${fmt(d.summa)}</div>
-          <div class="rs-sub">${fp(curPct)} портфеля</div>
-          <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100,curPct/maxP*100)}%;background:${t.color}"></div></div>
-        </div>
-        <div>
-          <div class="rs-label">Цель</div>
-          <div class="rs-val" style="color:var(--text2)">${gAmt>0?fmt(gAmt):'—'}</div>
-          <div class="rs-sub">${gPct>0?fp(gPct)+' целевых':''}</div>
-          <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100,gPct/maxP*100)}%;background:#333;border:1px solid ${t.color}55"></div></div>
-        </div>
-        <div>
-          <div class="rs-label">Дельта</div>
-          <div class="rs-val" style="color:${delta<0?'var(--green)':delta>0?'var(--red)':'var(--text2)'}">
-            ${gAmt>0?(delta>0?'+':'')+fmt(delta):'—'}
-          </div>
-          <div class="rs-sub">${gAmt>0?(deltaPct>0?'+':'')+deltaPct.toFixed(1)+'% от цели':''}</div>
-          <div class="bar-bg"><div class="bar-fill" style="width:${gAmt>0?Math.min(100,Math.abs(deltaPct)):0}%;background:${delta<0?'var(--green)':'var(--red)'}"></div></div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-window.saveGoal = saveGoal;
-window.refreshGoals = function(){ if(_td) drawGoalsChart(); };
-window.refreshReb = function(){ if(_td) renderRebalance(_td,_total); };
-
-setInterval(loadData, 5*60*1000);
-loadData();
 </script>
 </body>
 </html>
