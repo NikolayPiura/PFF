@@ -7,116 +7,118 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#060608;--bg2:#0e0e12;--bg3:#161619;--bg4:#1e1e24;--border:#252530;--text:#fff;--text2:#9ca3af;--text3:#4b5563;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a855f7;--cyan:#06b6d4;--orange:#f97316}
+:root{--bg:#060608;--bg2:#0e0e12;--bg3:#161619;--bg4:#1e1e24;--border:#252530;--text:#fff;--text2:#c9cdd4;--text3:#6b7280;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a855f7;--cyan:#06b6d4;--orange:#f97316}
 html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
 
-.header{background:linear-gradient(180deg,#0e0e14 0%,#0a0a0f 100%);border-bottom:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:52px;font-weight:900;letter-spacing:-2px;line-height:1}
+/* HEADER */
+.header{background:#0a0a0f;border-bottom:1px solid var(--border);padding:30px 52px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:58px;font-weight:900;letter-spacing:-2px;line-height:1}
 .logo .fam{color:var(--blue)}
-.logo .sub{font-size:12px;font-weight:400;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;display:block;margin-top:4px}
+.logo .sub{font-size:13px;font-weight:400;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;display:block;margin-top:4px}
 .hm{display:flex;align-items:center;gap:14px}
 .upd{font-size:13px;color:var(--text3)}
-.btn{background:var(--blue);color:#fff;border:none;border-radius:12px;padding:12px 26px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
+.btn{background:var(--blue);color:#fff;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;transition:.2s}
 .btn:hover{background:#2563eb}
 .btn.loading{opacity:.5;pointer-events:none}
 .btn-ghost{background:var(--bg3);border:1px solid var(--border);color:var(--text2)}
 .btn-ghost:hover{background:var(--bg4);color:var(--text)}
 
-.wrap{padding:36px 48px;display:flex;flex-direction:column;gap:36px;max-width:1800px;margin:0 auto}
+/* WRAP */
+.wrap{padding:44px 52px;display:flex;flex-direction:column;gap:44px;max-width:1600px;margin:0 auto}
 
-/* METRICS */
-.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.metric{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:28px 30px;position:relative;overflow:hidden;transition:border-color .2s}
+/* ── 4 BIG METRICS ── */
+.metrics-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:22px;padding:44px 40px 40px;position:relative;overflow:hidden;transition:border-color .2s;min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
 .metric:hover{border-color:#333}
-.metric::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--blue))}
-.metric::after{content:'';position:absolute;top:0;right:0;width:90px;height:90px;background:radial-gradient(circle at top right,var(--accent,var(--blue)),transparent 70%);opacity:.07;pointer-events:none}
-.ml{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
-.mv{font-size:42px;font-weight:900;line-height:1;letter-spacing:-.5px}
-.ms{font-size:14px;color:var(--text2);margin-top:8px;line-height:1.5}
-.badge{display:inline-flex;align-items:center;gap:4px;margin-top:9px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800}
+.metric::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent,var(--blue))}
+.metric::after{content:'';position:absolute;top:0;right:0;width:140px;height:140px;background:radial-gradient(circle at top right,var(--accent,var(--blue)),transparent 70%);opacity:.08;pointer-events:none}
+.ml{font-size:14px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:16px;font-weight:600}
+.mv{font-size:72px;font-weight:900;line-height:1;letter-spacing:-2px;word-break:break-all}
+.ms{font-size:16px;color:var(--text2);margin-top:12px;line-height:1.5}
+.badge{display:inline-flex;align-items:center;margin-top:10px;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:800}
 .bg{background:rgba(34,197,94,.12);color:var(--green)}
 .bb{background:rgba(59,130,246,.12);color:var(--blue)}
 .by{background:rgba(234,179,8,.12);color:var(--yellow)}
-.bp{background:rgba(168,85,247,.12);color:var(--purple)}
-.progress-bar-thin{height:4px;background:var(--bg4);border-radius:2px;margin-top:12px;overflow:hidden}
-.pb-fill{height:100%;border-radius:2px;transition:width 1s ease}
+.progress-bar{height:6px;background:var(--bg4);border-radius:3px;margin-top:16px;overflow:hidden}
+.pb-fill{height:100%;border-radius:3px;transition:width 1s ease}
 
 /* SECTION */
-.sec-title{font-size:22px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.sec-title::before{content:'';width:4px;height:22px;background:var(--blue);border-radius:2px;display:block}
-.sec-title small{font-size:13px;font-weight:400;color:var(--text3)}
+.sec-title{font-size:26px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.sec-title::before{content:'';width:5px;height:26px;background:var(--blue);border-radius:3px;display:block}
+.sec-title small{font-size:15px;font-weight:400;color:var(--text3)}
 
-/* 4 CHARTS */
-.charts-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:24px;min-width:0;overflow:hidden}
-.cc-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px}
-.cc-sub{font-size:12px;color:var(--text3);font-weight:400;margin-left:6px}
+/* ── 4 CHARTS ── */
+.charts-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:22px;padding:28px 24px;min-width:0;overflow:hidden}
+.cc-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:18px}
+.cc-sub{font-size:13px;color:var(--text3);font-weight:400}
 
-/* TYPES — full width like rebalance */
-.types-list{display:flex;flex-direction:column;gap:10px}
-.type-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:border-color .2s}
+/* ── TYPES — full width ── */
+.types-list{display:flex;flex-direction:column;gap:12px}
+.type-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:border-color .2s}
 .type-card:hover{border-color:#2a2a35}
-.type-header{padding:22px 28px;display:flex;align-items:center;gap:16px;cursor:pointer;user-select:none}
-.type-header:hover{background:rgba(255,255,255,.015)}
-.tdot{width:13px;height:13px;border-radius:50%;flex-shrink:0}
+.type-header{padding:26px 32px;display:flex;align-items:center;gap:18px;cursor:pointer;user-select:none}
+.type-header:hover{background:rgba(255,255,255,.012)}
+.tdot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
 .tinfo{flex:1;min-width:0}
-.tname{font-size:18px;font-weight:700}
-.tstats{display:flex;gap:20px;margin-top:5px;flex-wrap:wrap}
-.tstat{font-size:14px;color:var(--text3)}
+.tname{font-size:20px;font-weight:700}
+.tstats{display:flex;gap:24px;margin-top:6px;flex-wrap:wrap}
+.tstat{font-size:15px;color:var(--text3)}
 .tstat b{color:var(--text2);font-weight:600}
-.tpct{font-size:15px;font-weight:800;padding:6px 14px;border-radius:10px;white-space:nowrap;flex-shrink:0}
-.tarrow{font-size:13px;color:var(--text3);transition:transform .25s;flex-shrink:0;margin-left:8px}
+.tpct{font-size:17px;font-weight:800;padding:7px 16px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+.tarrow{font-size:14px;color:var(--text3);transition:transform .25s;flex-shrink:0;margin-left:8px}
 .type-card.open .tarrow{transform:rotate(180deg)}
-.type-assets{display:none;border-top:1px solid var(--border);padding:12px 20px 16px}
+.type-assets{display:none;border-top:1px solid var(--border);padding:14px 24px 18px}
 .type-card.open .type-assets{display:block}
-.asset-row{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:10px;transition:background .15s}
+.asset-row{display:flex;align-items:center;gap:14px;padding:12px 10px;border-radius:12px;transition:background .15s}
 .asset-row:hover{background:rgba(255,255,255,.025)}
 .a-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;opacity:.6}
-.a-name{flex:1;font-size:14px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.a-vals{display:flex;gap:14px;align-items:center;font-size:13px;flex-shrink:0}
-.a-sum{color:var(--text);font-weight:700}
-.a-mes{color:var(--text3)}
-.a-pct{padding:2px 8px;border-radius:6px;font-size:12px;font-weight:700}
+.a-name{flex:1;font-size:15px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.a-vals{display:flex;gap:16px;align-items:center;flex-shrink:0}
+.a-sum{color:var(--text);font-weight:700;font-size:15px}
+.a-mes{color:var(--text3);font-size:14px}
+.a-pct{padding:3px 9px;border-radius:7px;font-size:13px;font-weight:700}
 
-/* REBALANCE */
+/* ── REBALANCE — narrow (max 900px centered) ── */
+.reb-wrap{max-width:900px;margin:0 auto;width:100%}
 .reb-list{display:flex;flex-direction:column;gap:10px}
-.reb-row{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:24px 28px}
-.reb-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.rdot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
-.rname{font-size:18px;font-weight:700;flex:1}
-.rind{font-size:12px;font-weight:800;padding:5px 14px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.reb-row{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:22px 26px}
+.reb-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.rdot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.rname{font-size:17px;font-weight:700;flex:1}
+.rind{font-size:12px;font-weight:800;padding:5px 13px;border-radius:20px;white-space:nowrap;flex-shrink:0}
 .ibuy{background:rgba(34,197,94,.12);color:var(--green)}
 .isell{background:rgba(239,68,68,.12);color:var(--red)}
 .iok{background:rgba(59,130,246,.12);color:var(--blue)}
-.reb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.rs-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.rs-val{font-size:26px;font-weight:800}
-.rs-sub{font-size:12px;color:var(--text3);margin-top:3px}
-.bar-bg{height:6px;background:var(--bg4);border-radius:3px;margin-top:10px;overflow:hidden}
+.reb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rs-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.rs-val{font-size:22px;font-weight:800}
+.rs-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.bar-bg{height:5px;background:var(--bg4);border-radius:3px;margin-top:8px;overflow:hidden}
 .bar-fill{height:100%;border-radius:3px;transition:width .7s ease}
 
 /* SETTINGS */
-.settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center}
-.settings-overlay.open{display:flex}
-.sp{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;width:500px;max-height:80vh;overflow-y:auto}
-.sp-title{font-size:20px;font-weight:800;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between}
-.sp-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer}
+.sov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center}
+.sov.open{display:flex}
+.sp{background:var(--bg2);border:1px solid var(--border);border-radius:22px;padding:36px;width:520px;max-height:85vh;overflow-y:auto}
+.sp-title{font-size:22px;font-weight:800;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.sp-close{background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer}
 .sp-close:hover{color:var(--text)}
-.sp h3{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
-.goal-row-sp{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.goal-dot-sp{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.goal-name-sp{flex:1;font-size:15px;font-weight:600}
-.goal-cur-sp{font-size:13px;color:var(--text3);min-width:80px;text-align:right}
-.goal-inp{background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-weight:700;padding:8px 12px;width:120px;outline:none}
-.goal-inp:focus{border-color:var(--blue)}
-.sp-hint{font-size:12px;color:var(--text3);margin-top:12px}
+.sp h3{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+.g-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.g-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.g-name{flex:1;font-size:15px;font-weight:600}
+.g-cur{font-size:13px;color:var(--text3);min-width:80px;text-align:right}
+.g-inp{background:var(--bg3);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:15px;font-weight:700;padding:9px 14px;width:130px;outline:none}
+.g-inp:focus{border-color:var(--blue)}
+.sp-hint{font-size:13px;color:var(--text3);margin-top:14px}
 
 /* LOADING */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px}
-.spin{width:44px;height:44px;border:3px solid #1a1a1a;border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:18px}
+.spin{width:48px;height:48px;border:3px solid #1a1a1a;border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.ltxt{font-size:15px;color:var(--text2)}
-.err-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:16px;color:var(--red);font-size:13px}
+.ltxt{font-size:16px;color:var(--text2)}
+.err-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:14px;padding:18px;color:var(--red);font-size:14px}
 </style>
 </head>
 <body>
@@ -126,11 +128,11 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   <div class="ltxt">Загружаем данные…</div>
 </div>
 
-<div class="settings-overlay" id="sov" onclick="closeSov(event)">
+<div class="sov" id="sov" onclick="closeSov(event)">
   <div class="sp">
     <div class="sp-title">⚙️ Настройки <button class="sp-close" onclick="closeSP()">✕</button></div>
     <h3>🎯 Цели по типам ($)</h3>
-    <div id="goalsForm"></div>
+    <div id="gForm"></div>
     <div class="sp-hint">Цели используются в блоке ребалансировки.</div>
   </div>
 </div>
@@ -147,42 +149,47 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <div class="wrap">
   <div id="err" style="display:none" class="err-box"></div>
 
-  <div class="metrics-grid" id="m1"></div>
-  <div class="metrics-grid" id="m2"></div>
+  <!-- 4 БОЛЬШИЕ МЕТРИКИ -->
+  <div class="metrics-4" id="metrics"></div>
 
+  <!-- 4 ДИАГРАММЫ -->
   <div>
     <div class="sec-title">Структура портфеля</div>
     <div class="charts-4">
       <div class="chart-card">
-        <div class="cc-title">По типу актива <span class="cc-sub">доля %</span></div>
-        <div style="position:relative;height:320px"><canvas id="c_type"></canvas></div>
+        <div class="cc-title">По типу <span class="cc-sub">доля %</span></div>
+        <div style="position:relative;height:340px"><canvas id="c_type"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="cc-title">По уровню риска <span class="cc-sub">доля %</span></div>
-        <div style="position:relative;height:320px"><canvas id="c_risk"></canvas></div>
+        <div class="cc-title">По риску <span class="cc-sub">доля %</span></div>
+        <div style="position:relative;height:340px"><canvas id="c_risk"></canvas></div>
       </div>
       <div class="chart-card">
         <div class="cc-title">По валюте <span class="cc-sub">доля %</span></div>
-        <div style="position:relative;height:320px"><canvas id="c_curr"></canvas></div>
+        <div style="position:relative;height:340px"><canvas id="c_curr"></canvas></div>
       </div>
       <div class="chart-card">
         <div class="cc-title">По ликвидности <span class="cc-sub">доля %</span></div>
-        <div style="position:relative;height:320px"><canvas id="c_liq"></canvas></div>
+        <div style="position:relative;height:340px"><canvas id="c_liq"></canvas></div>
       </div>
     </div>
   </div>
 
+  <!-- АКТИВЫ ПО ТИПАМ -->
   <div>
     <div class="sec-title">Активы по типам <small>— нажми для раскрытия</small></div>
     <div class="types-list" id="tlist"></div>
   </div>
 
+  <!-- РЕБАЛАНСИРОВКА — узко -->
   <div>
     <div class="sec-title">Ребалансировка</div>
-    <div class="reb-list" id="rlist"></div>
+    <div class="reb-wrap">
+      <div class="reb-list" id="rlist"></div>
+    </div>
   </div>
 
-  <div style="text-align:center;padding:16px 0;font-size:12px;color:var(--text3)">
+  <div style="text-align:center;padding:16px 0;font-size:13px;color:var(--text3)">
     Piura Family Found · Данные из Google Sheets · Автообновление каждые 5 мин
   </div>
 </div>
@@ -205,14 +212,16 @@ const fmt=n=>{if(!n&&n!==0)return'$0';n=Math.round(n);if(Math.abs(n)>=1000000)re
 const fp=n=>n?n.toFixed(1)+'%':'0%';
 const loadGoals=()=>{try{return JSON.parse(localStorage.getItem('pff_g')||'{}')}catch(e){return{}}};
 const saveGoal=(id,v)=>{const g=loadGoals();g[id]=v;localStorage.setItem('pff_g',JSON.stringify(g));};
-const killChart=id=>{const i=CH.findIndex(c=>c.canvas&&c.canvas.id===id);if(i>=0){CH[i].destroy();CH.splice(i,1);}};
+const kill=id=>{const i=CH.findIndex(c=>c.canvas&&c.canvas.id===id);if(i>=0){CH[i].destroy();CH.splice(i,1);}};
 
-// Donut с подписями на диаграмме
-function makeDoughnut(id, labels, vals, colors) {
-  killChart(id);
+// Donut с % в легенде и суммой в центре
+function doughnut(id, labels, vals, colors) {
+  kill(id);
   const ctx = document.getElementById(id);
   if (!ctx) return;
-  const total = vals.reduce((a,b)=>a+b,0);
+  const tot = vals.reduce((a,b)=>a+b,0);
+  if (!tot) return;
+
   CH.push(new Chart(ctx, {
     type: 'doughnut',
     data: {
@@ -220,33 +229,32 @@ function makeDoughnut(id, labels, vals, colors) {
       datasets: [{
         data: vals,
         backgroundColor: colors,
-        borderWidth: 3,
+        borderWidth: 4,
         borderColor: '#0e0e12',
-        hoverOffset: 8
+        hoverOffset: 10
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      cutout: '52%',
+      cutout: '55%',
       plugins: {
         legend: {
           display: true,
           position: 'bottom',
           labels: {
-            color: '#9ca3af',
-            font: { size: 12 },
-            boxWidth: 12,
-            padding: 12,
+            color: '#c9cdd4',
+            font: { size: 13, weight: '600' },
+            boxWidth: 13,
+            padding: 14,
             usePointStyle: true,
-            // Добавляем % к легенде
             generateLabels: chart => {
-              const data = chart.data;
-              const tot = data.datasets[0].data.reduce((a,b)=>a+b,0);
-              return data.labels.map((label, i) => ({
-                text: `${label}  ${tot>0?((data.datasets[0].data[i]/tot)*100).toFixed(1)+'%':'0%'}`,
-                fillStyle: data.datasets[0].backgroundColor[i],
-                strokeStyle: data.datasets[0].backgroundColor[i],
+              const d = chart.data;
+              const t = d.datasets[0].data.reduce((a,b)=>a+b,0);
+              return d.labels.map((lbl,i) => ({
+                text: `${lbl}   ${t>0?((d.datasets[0].data[i]/t)*100).toFixed(1)+'%':'—'}`,
+                fillStyle: d.datasets[0].backgroundColor[i],
+                strokeStyle: d.datasets[0].backgroundColor[i],
                 pointStyle: 'circle',
                 hidden: false,
                 index: i
@@ -256,30 +264,27 @@ function makeDoughnut(id, labels, vals, colors) {
         },
         tooltip: {
           callbacks: {
-            label: x => ` ${x.label}: ${fmt(x.raw)} — ${total>0?((x.raw/total)*100).toFixed(1):'0'}%`
+            label: x => ` ${x.label}: ${fmt(x.raw)}  (${tot>0?((x.raw/tot)*100).toFixed(1):'0'}%)`
           }
-        },
-        // Текст в центре
-        doughnutLabel: { total, fmt }
+        }
       }
     },
     plugins: [{
-      id: 'centerText',
+      id: 'ctr',
       beforeDraw(chart) {
-        const { width, height, ctx } = chart;
-        const tot = chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
-        if (!tot) return;
+        const {width, height, ctx} = chart;
+        const lh = chart.legend?.height || 0;
+        const cy = (height - lh) / 2;
+        const cx = width / 2;
         ctx.save();
-        const cx = width/2;
-        const cy = (height - (chart.legend?.height||0)) / 2;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 18px -apple-system, sans-serif';
-        ctx.fillText(fmt(tot), cx, cy - 10);
-        ctx.fillStyle = '#4b5563';
-        ctx.font = '12px -apple-system, sans-serif';
-        ctx.fillText('всего', cx, cy + 12);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 22px -apple-system,sans-serif';
+        ctx.fillText(fmt(tot), cx, cy - 11);
+        ctx.fillStyle = '#6b7280';
+        ctx.font = '13px -apple-system,sans-serif';
+        ctx.fillText('всего', cx, cy + 14);
         ctx.restore();
       }
     }]
@@ -288,214 +293,168 @@ function makeDoughnut(id, labels, vals, colors) {
 
 function openSP() {
   const goals = loadGoals();
-  document.getElementById('goalsForm').innerHTML = TYPES.map(t=>`
-    <div class="goal-row-sp">
-      <div class="goal-dot-sp" style="background:${t.color}"></div>
-      <div class="goal-name-sp">${t.name}</div>
-      <div class="goal-cur-sp">${_td?fmt(_td[t.id].summa):'—'}</div>
-      <input class="goal-inp" type="number" placeholder="0" value="${goals[t.id]||''}"
+  document.getElementById('gForm').innerHTML = TYPES.map(t=>`
+    <div class="g-row">
+      <div class="g-dot" style="background:${t.color}"></div>
+      <div class="g-name">${t.name}</div>
+      <div class="g-cur">${_td?fmt(_td[t.id].summa):'—'}</div>
+      <input class="g-inp" type="number" placeholder="0" value="${goals[t.id]||''}"
         onchange="saveGoal('${t.id}',parseFloat(this.value)||0)">
     </div>`).join('');
   document.getElementById('sov').classList.add('open');
 }
 function closeSP() {
   document.getElementById('sov').classList.remove('open');
-  if (_td) renderReb(_td, _total);
+  if (_td) renderReb(_td,_total);
 }
-function closeSov(e) { if (e.target===document.getElementById('sov')) closeSP(); }
+function closeSov(e) { if(e.target===document.getElementById('sov')) closeSP(); }
 
 async function loadData() {
   document.getElementById('rbtn').classList.add('loading');
-  document.getElementById('ov').style.display = 'flex';
-  document.getElementById('err').style.display = 'none';
+  document.getElementById('ov').style.display='flex';
+  document.getElementById('err').style.display='none';
   try {
-    const r = await fetch(API + '?t=' + Date.now());
-    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const r = await fetch(API+'?t='+Date.now());
+    if (!r.ok) throw new Error('HTTP '+r.status);
     const data = await r.json();
     process(data);
-    document.getElementById('upd').textContent = 'Обновлено: ' + new Date().toLocaleString('ru');
+    document.getElementById('upd').textContent='Обновлено: '+new Date().toLocaleString('ru');
   } catch(e) {
-    const eb = document.getElementById('err');
-    eb.style.display = 'block';
-    eb.textContent = 'Ошибка: ' + e.message;
+    const eb=document.getElementById('err');
+    eb.style.display='block';
+    eb.textContent='Ошибка: '+e.message;
   } finally {
-    document.getElementById('ov').style.display = 'none';
+    document.getElementById('ov').style.display='none';
     document.getElementById('rbtn').classList.remove('loading');
   }
 }
 
 function process(data) {
-  const rows = data['2026 (PFF)'] || [];
+  const rows = data['2026 (PFF)']||[];
   const acc = {};
-  TYPES.forEach(t => { acc[t.id] = {summa:0,mes:0,ned:0,pctSum:0,pctCount:0,assets:[]}; });
+  TYPES.forEach(t=>{acc[t.id]={summa:0,mes:0,ned:0,pctSum:0,pctCount:0,assets:[]};});
 
   const byRisk={}, byCurr={}, byLiq={};
-  let totalSumma=0, totalMes=0, totalNed=0, avgPct=0, foundItogo=false;
+  let totalSumma=0,totalMes=0,totalNed=0,avgPct=0,foundItogo=false;
 
-  rows.forEach(row => {
-    const aktiv = String(row['АКТИВ']||'').trim();
-    const tip   = String(row['ТИП']||'').trim();
-    const risk  = String(row['Риск']||row['РИСК']||'').trim();
-    const curr  = String(row['Валюта']||row['ВАЛЮТА']||'').trim();
-    const liq   = String(row['Ликвидность']||row['ЛИКВИДНОСТЬ']||'').trim();
-    const summa = parseFloat(row['СУММА'])||0;
-    const pct   = parseFloat(row['%'])||0;
-    const mes   = parseFloat(row['МЕСЯЦ'])||0;
-    const ned   = parseFloat(row['НЕДЕЛЯ'])||0;
+  rows.forEach(row=>{
+    const aktiv=String(row['АКТИВ']||'').trim();
+    const tip  =String(row['ТИП']||'').trim();
+    const risk =String(row['Риск']||row['РИСК']||'').trim();
+    const curr =String(row['Валюта']||row['ВАЛЮТА']||'').trim();
+    const liq  =String(row['Ликвидность']||row['ЛИКВИДНОСТЬ']||'').trim();
+    const summa=parseFloat(row['СУММА'])||0;
+    const pct  =parseFloat(row['%'])||0;
+    const mes  =parseFloat(row['МЕСЯЦ'])||0;
+    const ned  =parseFloat(row['НЕДЕЛЯ'])||0;
 
-    if (aktiv === 'ИТОГО') {
-      totalSumma=summa; totalMes=mes; totalNed=ned; avgPct=pct*100; foundItogo=true; return;
-    }
-    if (!aktiv || aktiv==='АКТИВ' || !tip) return;
+    if (aktiv==='ИТОГО'){totalSumma=summa;totalMes=mes;totalNed=ned;avgPct=pct*100;foundItogo=true;return;}
+    if (!aktiv||aktiv==='АКТИВ'||!tip) return;
+    const to=TYPES.find(t=>tip===t.typ||tip.toLowerCase()===t.typ.toLowerCase());
+    if (!to) return;
 
-    const typeObj = TYPES.find(t => tip===t.typ || tip.toLowerCase()===t.typ.toLowerCase());
-    if (!typeObj) return;
-
-    acc[typeObj.id].summa += summa;
-    acc[typeObj.id].mes   += mes;
-    acc[typeObj.id].ned   += ned;
-    if (pct>0) { acc[typeObj.id].pctSum+=pct*100; acc[typeObj.id].pctCount++; }
-    acc[typeObj.id].assets.push({name:aktiv,summa,mes,ned,pct:pct*100,risk,curr,liq});
-
-    if (risk) byRisk[risk] = (byRisk[risk]||0)+summa;
-    if (curr) byCurr[curr] = (byCurr[curr]||0)+summa;
-    if (liq)  byLiq[liq]   = (byLiq[liq]||0)+summa;
+    acc[to.id].summa+=summa; acc[to.id].mes+=mes; acc[to.id].ned+=ned;
+    if (pct>0){acc[to.id].pctSum+=pct*100;acc[to.id].pctCount++;}
+    acc[to.id].assets.push({name:aktiv,summa,mes,ned,pct:pct*100,risk,curr,liq});
+    if (risk) byRisk[risk]=(byRisk[risk]||0)+summa;
+    if (curr) byCurr[curr]=(byCurr[curr]||0)+summa;
+    if (liq)  byLiq[liq] =(byLiq[liq] ||0)+summa;
   });
 
-  if (!foundItogo) {
-    totalSumma = TYPES.reduce((a,t)=>a+acc[t.id].summa,0);
-    totalMes   = TYPES.reduce((a,t)=>a+acc[t.id].mes,0);
-    totalNed   = TYPES.reduce((a,t)=>a+acc[t.id].ned,0);
-  }
-  if (totalNed===0) totalNed = totalMes/4.33;
-  if (avgPct===0 && totalSumma>0) avgPct = totalMes*12/totalSumma*100;
+  if (!foundItogo){totalSumma=TYPES.reduce((a,t)=>a+acc[t.id].summa,0);totalMes=TYPES.reduce((a,t)=>a+acc[t.id].mes,0);totalNed=TYPES.reduce((a,t)=>a+acc[t.id].ned,0);}
+  if (totalNed===0) totalNed=totalMes/4.33;
+  if (avgPct===0&&totalSumma>0) avgPct=totalMes*12/totalSumma*100;
 
-  const td = {};
-  TYPES.forEach(t => {
-    const a = acc[t.id];
-    td[t.id] = {
-      summa:a.summa, mes:a.mes, ned:a.ned, assets:a.assets,
-      pct: a.pctCount>0 ? a.pctSum/a.pctCount : (a.summa>0&&a.mes>0 ? a.mes*12/a.summa*100 : 0)
-    };
-  });
+  const td={};
+  TYPES.forEach(t=>{const a=acc[t.id];td[t.id]={summa:a.summa,mes:a.mes,ned:a.ned,assets:a.assets,pct:a.pctCount>0?a.pctSum/a.pctCount:(a.summa>0&&a.mes>0?a.mes*12/a.summa*100:0)};});
+  _td=td;_total=totalSumma;
+  _assets=TYPES.flatMap(t=>acc[t.id].assets.map(a=>({...a,typeId:t.id,color:t.color})));
 
-  _td=td; _total=totalSumma;
-  _assets = TYPES.flatMap(t => acc[t.id].assets.map(a=>({...a,typeId:t.id,color:t.color})));
-
-  renderM1(totalSumma, totalMes, totalNed, avgPct);
-  renderM2(totalSumma, totalMes, totalNed, avgPct);
-  render4Charts(td, totalSumma, byRisk, byCurr, byLiq);
-  renderTypes(td, totalSumma);
-  renderReb(td, totalSumma);
+  renderMetrics(totalSumma,totalMes,totalNed,avgPct);
+  render4(td,totalSumma,byRisk,byCurr,byLiq);
+  renderTypes(td,totalSumma);
+  renderReb(td,totalSumma);
 }
 
-function renderM1(total, mes, ned, pct) {
-  document.getElementById('m1').innerHTML = `
+function renderMetrics(total,mes,ned,pct) {
+  const goals=loadGoals();
+  const gTot=TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
+  const gPct=gTot>0?Math.min(100,total/gTot*100):0;
+
+  const r=pct/100/12;
+  let m1M=null;
+  if (r>0&&total<1000000){let lo=0,hi=600;while(lo<hi){const mid=Math.floor((lo+hi)/2);if(total*Math.pow(1+r,mid)>=1000000)hi=mid;else lo=mid+1;}m1M=lo;}
+  const m1s=total>=1000000?'✓ Готово':m1M?`${m1M} мес`:'—';
+
+  document.getElementById('metrics').innerHTML=`
   <div class="metric" style="--accent:var(--blue)">
-    <div class="ml">Портфель</div>
-    <div class="mv">${fmt(total)}</div>
+    <div>
+      <div class="ml">Портфель</div>
+      <div class="mv">${fmt(total)}</div>
+    </div>
     <div class="ms">активы фонда</div>
   </div>
   <div class="metric" style="--accent:var(--green)">
-    <div class="ml">Доход / месяц</div>
-    <div class="mv">${fmt(mes)}</div>
-    <div class="badge bg">пассивный</div>
+    <div>
+      <div class="ml">Доход / месяц</div>
+      <div class="mv">${fmt(mes)}</div>
+    </div>
+    <div>
+      <div class="ms">~${fmt(mes*12)} / год</div>
+      <div class="badge bg">пассивный доход</div>
+    </div>
   </div>
-  <div class="metric" style="--accent:var(--purple)">
-    <div class="ml">Доход / неделя</div>
-    <div class="mv">${fmt(ned)}</div>
-    <div class="ms">~${fmt(mes*12)} / год</div>
-  </div>
-  <div class="metric" style="--accent:var(--yellow)">
-    <div class="ml">Средняя ставка</div>
-    <div class="mv">${pct.toFixed(1)}%</div>
-    <div class="badge bb">годовых</div>
-  </div>`;
-}
-
-function renderM2(total, mes, ned, pct) {
-  const goals = loadGoals();
-  const goalTotal = TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
-  const goalPct = goalTotal>0 ? Math.min(100,total/goalTotal*100) : 0;
-
-  const r = pct/100/12;
-  let months1M = null;
-  if (r>0 && total<1000000) {
-    let lo=0, hi=600;
-    while (lo<hi) {
-      const mid=Math.floor((lo+hi)/2);
-      if (total*Math.pow(1+r,mid)>=1000000) hi=mid; else lo=mid+1;
-    }
-    months1M=lo;
-  }
-
-  const m1str = total>=1000000 ? '✓ Достигнут' : months1M ? `${months1M} мес` : '—';
-  const highRisk = _assets.filter(a=>a.risk==='Высокий').reduce((s,a)=>s+a.summa,0);
-  const highRiskPct = total>0 ? highRisk/total*100 : 0;
-
-  document.getElementById('m2').innerHTML = `
   <div class="metric" style="--accent:var(--green)">
-    <div class="ml">Прогресс к цели</div>
-    <div class="mv" style="color:var(--green)">${goalTotal>0 ? goalPct.toFixed(1)+'%' : '—'}</div>
-    <div class="ms">${goalTotal>0 ? fmt(total)+' из '+fmt(goalTotal) : 'Задай цели ⚙️'}</div>
-    ${goalTotal>0 ? `<div class="progress-bar-thin"><div class="pb-fill" style="width:${goalPct}%;background:var(--green)"></div></div>` : ''}
-  </div>
-  <div class="metric" style="--accent:var(--cyan)">
-    <div class="ml">Доход в день</div>
-    <div class="mv" style="color:var(--cyan)">${fmt(mes/30)}</div>
-    <div class="ms">${fmt(mes*12)} / год · ${fmt(ned)} / неделю</div>
+    <div>
+      <div class="ml">Прогресс к цели</div>
+      <div class="mv" style="color:var(--green)">${gTot>0?gPct.toFixed(1)+'%':'—'}</div>
+    </div>
+    <div>
+      <div class="ms">${gTot>0?fmt(total)+' из '+fmt(gTot):'Задай цели в настройках ⚙️'}</div>
+      ${gTot>0?`<div class="progress-bar"><div class="pb-fill" style="width:${gPct}%;background:var(--green)"></div></div>`:''}
+    </div>
   </div>
   <div class="metric" style="--accent:var(--yellow)">
-    <div class="ml">До $1 млн (сложный %)</div>
-    <div class="mv" style="color:var(--yellow)">${m1str}</div>
-    <div class="ms">${total<1000000&&months1M ? `ставка ${pct.toFixed(1)}% + реинвест` : 'все доходы реинвестируются'}</div>
-    <div class="progress-bar-thin"><div class="pb-fill" style="width:${Math.min(100,total/1000000*100)}%;background:var(--yellow)"></div></div>
-  </div>
-  <div class="metric" style="--accent:var(--red)">
-    <div class="ml">Высокий риск</div>
-    <div class="mv" style="color:${highRiskPct>50?'var(--red)':highRiskPct>30?'var(--yellow)':'var(--green)'}">${highRiskPct.toFixed(1)}%</div>
-    <div class="ms">${fmt(highRisk)} из ${fmt(total)}</div>
-    <div class="progress-bar-thin"><div class="pb-fill" style="width:${highRiskPct}%;background:var(--red)"></div></div>
+    <div>
+      <div class="ml">До $1 млн (сложный %)</div>
+      <div class="mv" style="color:var(--yellow)">${m1s}</div>
+    </div>
+    <div>
+      <div class="ms">ставка ${pct.toFixed(1)}% + реинвест</div>
+      <div class="progress-bar"><div class="pb-fill" style="width:${Math.min(100,total/1000000*100)}%;background:var(--yellow)"></div></div>
+    </div>
   </div>`;
 }
 
-function render4Charts(td, total, byRisk, byCurr, byLiq) {
-  makeDoughnut('c_type', TYPES.map(t=>t.name), TYPES.map(t=>td[t.id].summa), TYPES.map(t=>t.color));
-
-  const rKeys=Object.keys(byRisk);
-  const rColors={'Высокий':'#ef4444','Средний':'#f97316','Низкий':'#22c55e'};
-  makeDoughnut('c_risk', rKeys, rKeys.map(k=>byRisk[k]), rKeys.map(k=>rColors[k]||'#888'));
-
-  const cKeys=Object.keys(byCurr);
-  const cColors={'Доллар':'#3b82f6','Рубль':'#a855f7','Евро':'#06b6d4','Крипто':'#eab308'};
-  makeDoughnut('c_curr', cKeys, cKeys.map(k=>byCurr[k]), cKeys.map(k=>cColors[k]||'#888'));
-
-  const lKeys=Object.keys(byLiq);
-  const lColors={'Высокая':'#22c55e','Средняя':'#eab308','Низкая':'#ef4444','Вы':'#22c55e'};
-  makeDoughnut('c_liq', lKeys, lKeys.map(k=>byLiq[k]), lKeys.map(k=>lColors[k]||'#888'));
+function render4(td,total,byRisk,byCurr,byLiq){
+  doughnut('c_type',TYPES.map(t=>t.name),TYPES.map(t=>td[t.id].summa),TYPES.map(t=>t.color));
+  const rK=Object.keys(byRisk),rC={'Высокий':'#ef4444','Средний':'#f97316','Низкий':'#22c55e'};
+  doughnut('c_risk',rK,rK.map(k=>byRisk[k]),rK.map(k=>rC[k]||'#888'));
+  const cK=Object.keys(byCurr),cC={'Доллар':'#3b82f6','Рубль':'#a855f7','Евро':'#06b6d4','Крипто':'#eab308'};
+  doughnut('c_curr',cK,cK.map(k=>byCurr[k]),cK.map(k=>cC[k]||'#888'));
+  const lK=Object.keys(byLiq),lC={'Высокая':'#22c55e','Средняя':'#eab308','Низкая':'#ef4444','Вы':'#22c55e'};
+  doughnut('c_liq',lK,lK.map(k=>byLiq[k]),lK.map(k=>lC[k]||'#888'));
 }
 
-function renderTypes(td, total) {
-  document.getElementById('tlist').innerHTML = TYPES.map(t => {
-    const d = td[t.id];
-    const pc = d.pct;
-    const clr = pc>=25?'#a855f7':pc>=12?'#22c55e':pc>=4?'#3b82f6':'#4b5563';
-    const assetsHtml = d.assets.length>0
-      ? d.assets.sort((a,b)=>b.summa-a.summa).map(a => {
-          const ap = a.pct>0 ? a.pct : (a.summa>0&&a.mes>0 ? a.mes*12/a.summa*100 : 0);
-          const aclr = ap>=30?'#a855f7':ap>=15?'#22c55e':ap>=4?'#3b82f6':'#4b5563';
-          return `<div class="asset-row">
-            <div class="a-dot" style="background:${t.color}"></div>
-            <div class="a-name">${a.name}</div>
-            <div class="a-vals">
-              <span class="a-sum">${fmt(a.summa)}</span>
-              <span class="a-mes">${fmt(a.mes)}/мес</span>
-              <span class="a-pct" style="background:${aclr}18;color:${aclr}">${ap>0?ap.toFixed(1)+'%':'0%'}</span>
-            </div>
-          </div>`;
-        }).join('')
-      : '<div style="padding:10px 8px;color:var(--text3);font-size:14px">Нет активов</div>';
-
+function renderTypes(td,total){
+  document.getElementById('tlist').innerHTML=TYPES.map(t=>{
+    const d=td[t.id];
+    const pc=d.pct;
+    const clr=pc>=25?'#a855f7':pc>=12?'#22c55e':pc>=4?'#3b82f6':'#4b5563';
+    const aH=d.assets.length>0
+      ?d.assets.sort((a,b)=>b.summa-a.summa).map(a=>{
+        const ap=a.pct>0?a.pct:(a.summa>0&&a.mes>0?a.mes*12/a.summa*100:0);
+        const ac=ap>=30?'#a855f7':ap>=15?'#22c55e':ap>=4?'#3b82f6':'#4b5563';
+        return `<div class="asset-row">
+          <div class="a-dot" style="background:${t.color}"></div>
+          <div class="a-name">${a.name}</div>
+          <div class="a-vals">
+            <span class="a-sum">${fmt(a.summa)}</span>
+            <span class="a-mes">${fmt(a.mes)}/мес</span>
+            <span class="a-pct" style="background:${ac}18;color:${ac}">${ap>0?ap.toFixed(1)+'%':'0%'}</span>
+          </div>
+        </div>`;}).join('')
+      :'<div style="padding:10px 8px;color:var(--text3);font-size:15px">Нет активов</div>';
     return `<div class="type-card" id="tc_${t.id}">
       <div class="type-header" onclick="toggleType('${t.id}')">
         <div class="tdot" style="background:${t.color}"></div>
@@ -510,29 +469,29 @@ function renderTypes(td, total) {
         <div class="tpct" style="background:${clr}18;color:${clr}">${fp(pc)}</div>
         <div class="tarrow">▼</div>
       </div>
-      <div class="type-assets">${assetsHtml}</div>
+      <div class="type-assets">${aH}</div>
     </div>`;
   }).join('');
 }
 
-function toggleType(id) { document.getElementById('tc_'+id).classList.toggle('open'); }
+function toggleType(id){document.getElementById('tc_'+id).classList.toggle('open');}
 
-function renderReb(td, total) {
-  const goals = loadGoals();
-  const gTotal = TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
-  document.getElementById('rlist').innerHTML = TYPES.map(t => {
-    const d = td[t.id];
-    const curPct = total>0?(d.summa/total*100):0;
-    const gAmt   = parseFloat(goals[t.id])||0;
-    const gPct   = gTotal>0?(gAmt/gTotal*100):0;
-    const delta  = gAmt>0?(d.summa-gAmt):0;
-    const dPct   = gAmt>0?((d.summa-gAmt)/gAmt*100):0;
-    const maxP   = Math.max(curPct,gPct,1);
-    let cls, txt;
-    if (!gAmt)               {cls='iok';  txt='Задай цель в настройках ⚙️';}
-    else if (delta<-gAmt*.05){cls='ibuy'; txt=`↑ Докупить ${fmt(Math.abs(delta))}`;}
-    else if (delta>gAmt*.05) {cls='isell';txt=`↓ Сократить ${fmt(delta)}`;}
-    else                     {cls='iok';  txt='✓ В норме';}
+function renderReb(td,total){
+  const goals=loadGoals();
+  const gTot=TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
+  document.getElementById('rlist').innerHTML=TYPES.map(t=>{
+    const d=td[t.id];
+    const cp=total>0?(d.summa/total*100):0;
+    const gA=parseFloat(goals[t.id])||0;
+    const gP=gTot>0?(gA/gTot*100):0;
+    const dlt=gA>0?(d.summa-gA):0;
+    const dP=gA>0?((d.summa-gA)/gA*100):0;
+    const mx=Math.max(cp,gP,1);
+    let cls,txt;
+    if (!gA)           {cls='iok'; txt='Задай цель ⚙️';}
+    else if(dlt<-gA*.05){cls='ibuy';txt=`↑ Докупить ${fmt(Math.abs(dlt))}`;}
+    else if(dlt>gA*.05) {cls='isell';txt=`↓ Сократить ${fmt(dlt)}`;}
+    else               {cls='iok'; txt='✓ В норме';}
     return `<div class="reb-row">
       <div class="reb-head">
         <div class="rdot" style="background:${t.color}"></div>
@@ -543,20 +502,20 @@ function renderReb(td, total) {
         <div>
           <div class="rs-label">Текущее</div>
           <div class="rs-val" style="color:${t.color}">${fmt(d.summa)}</div>
-          <div class="rs-sub">${fp(curPct)} портфеля</div>
-          <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100,curPct/maxP*100)}%;background:${t.color}"></div></div>
+          <div class="rs-sub">${fp(cp)} портфеля</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100,cp/mx*100)}%;background:${t.color}"></div></div>
         </div>
         <div>
           <div class="rs-label">Цель</div>
-          <div class="rs-val" style="color:var(--text2)">${gAmt?fmt(gAmt):'—'}</div>
-          <div class="rs-sub">${gPct?fp(gPct)+' от целей':''}</div>
-          <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100,gPct/maxP*100)}%;background:#252530;border:1px solid ${t.color}44"></div></div>
+          <div class="rs-val" style="color:var(--text2)">${gA?fmt(gA):'—'}</div>
+          <div class="rs-sub">${gP?fp(gP)+' от целей':''}</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100,gP/mx*100)}%;background:#252530;border:1px solid ${t.color}44"></div></div>
         </div>
         <div>
           <div class="rs-label">Дельта</div>
-          <div class="rs-val" style="color:${delta<0?'var(--green)':delta>0?'var(--red)':'var(--text2)'}">${gAmt?(delta>0?'+':'')+fmt(delta):'—'}</div>
-          <div class="rs-sub">${gAmt?(dPct>0?'+':'')+dPct.toFixed(1)+'% от цели':''}</div>
-          <div class="bar-bg"><div class="bar-fill" style="width:${gAmt?Math.min(100,Math.abs(dPct)):0}%;background:${delta<0?'var(--green)':'var(--red)'}"></div></div>
+          <div class="rs-val" style="color:${dlt<0?'var(--green)':dlt>0?'var(--red)':'var(--text2)'}">${gA?(dlt>0?'+':'')+fmt(dlt):'—'}</div>
+          <div class="rs-sub">${gA?(dP>0?'+':'')+dP.toFixed(1)+'% от цели':''}</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${gA?Math.min(100,Math.abs(dP)):0}%;background:${dlt<0?'var(--green)':'var(--red)'}"></div></div>
         </div>
       </div>
     </div>`;
@@ -569,7 +528,7 @@ window.closeSP=closeSP;
 window.closeSov=closeSov;
 window.saveGoal=saveGoal;
 
-setInterval(loadData, 5*60*1000);
+setInterval(loadData,5*60*1000);
 loadData();
 </script>
 </body>
