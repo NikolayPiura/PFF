@@ -7,118 +7,113 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#060608;--bg2:#0e0e12;--bg3:#161619;--bg4:#1e1e24;--border:#252530;--text:#fff;--text2:#9ca3af;--text3:#4b5563;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a855f7;--cyan:#06b6d4;--orange:#f97316;--pink:#ec4899}
+:root{--bg:#060608;--bg2:#0e0e12;--bg3:#161619;--bg4:#1e1e24;--border:#252530;--text:#fff;--text2:#9ca3af;--text3:#4b5563;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a855f7;--cyan:#06b6d4;--orange:#f97316}
 html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
 
-.header{background:linear-gradient(180deg,#0e0e14 0%,#0a0a0f 100%);border-bottom:1px solid var(--border);padding:24px 40px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:44px;font-weight:900;letter-spacing:-2px;line-height:1}
+.header{background:linear-gradient(180deg,#0e0e14 0%,#0a0a0f 100%);border-bottom:1px solid var(--border);padding:22px 36px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:42px;font-weight:900;letter-spacing:-2px;line-height:1}
 .logo .fam{color:var(--blue)}
-.logo .sub{font-size:11px;font-weight:400;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;display:block;margin-top:2px}
+.logo .sub{font-size:10px;font-weight:400;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;display:block;margin-top:2px}
 .hm{display:flex;align-items:center;gap:12px}
 .upd{font-size:11px;color:var(--text3)}
 .btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s}
 .btn:hover{background:#2563eb}
 .btn.loading{opacity:.5;pointer-events:none}
-.btn-ghost{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:9px 18px;font-size:13px;font-weight:600}
+.btn-ghost{background:var(--bg3);border:1px solid var(--border);color:var(--text2)}
 .btn-ghost:hover{background:var(--bg4);color:var(--text)}
 
-.wrap{padding:24px 40px;display:flex;flex-direction:column;gap:24px;max-width:1700px;margin:0 auto}
+.wrap{padding:22px 36px;display:flex;flex-direction:column;gap:20px;max-width:1800px;margin:0 auto}
 
-/* METRICS — 4 + 4 grid */
-.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.metric{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;transition:border-color .2s}
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;transition:border-color .2s}
 .metric:hover{border-color:#333}
-.metric::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--blue));opacity:.8}
-.metric::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at top right,var(--accent,var(--blue)),transparent 70%);opacity:.06;pointer-events:none}
-.ml{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
-.mv{font-size:32px;font-weight:900;line-height:1;letter-spacing:-.5px}
-.ms{font-size:12px;color:var(--text2);margin-top:5px;line-height:1.4}
-.badge{display:inline-flex;align-items:center;gap:4px;margin-top:7px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:.04em}
+.metric::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--blue))}
+.metric::after{content:'';position:absolute;top:0;right:0;width:70px;height:70px;background:radial-gradient(circle at top right,var(--accent,var(--blue)),transparent 70%);opacity:.07;pointer-events:none}
+.ml{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:7px}
+.mv{font-size:30px;font-weight:900;line-height:1;letter-spacing:-.5px}
+.ms{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.4}
+.badge{display:inline-flex;align-items:center;gap:4px;margin-top:6px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:800}
 .bg{background:rgba(34,197,94,.12);color:var(--green)}
 .bb{background:rgba(59,130,246,.12);color:var(--blue)}
 .by{background:rgba(234,179,8,.12);color:var(--yellow)}
 .bp{background:rgba(168,85,247,.12);color:var(--purple)}
-.br{background:rgba(239,68,68,.12);color:var(--red)}
-.bc{background:rgba(6,182,212,.12);color:var(--cyan)}
-
-.progress-bar-thin{height:3px;background:var(--bg4);border-radius:2px;margin-top:10px;overflow:hidden}
+.progress-bar-thin{height:3px;background:var(--bg4);border-radius:2px;margin-top:9px;overflow:hidden}
 .pb-fill{height:100%;border-radius:2px;transition:width 1s ease}
 
 /* SECTION */
-.sec{display:flex;flex-direction:column;gap:0}
-.sec-title{font-size:17px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:var(--text)}
-.sec-title::before{content:'';width:3px;height:18px;background:var(--blue);border-radius:2px;display:block}
+.sec-title{font-size:16px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-title::before{content:'';width:3px;height:17px;background:var(--blue);border-radius:2px;display:block}
 .sec-title small{font-size:11px;font-weight:400;color:var(--text3)}
 
-/* CHARTS GRID */
-.charts-5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.charts-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px}
-.chart-card.span2{grid-column:span 2}
-.cc-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
-.cc-sub{font-size:10px;color:var(--text3);font-weight:400}
+/* 4 CHARTS GRID */
+.charts-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;min-width:0}
+.cc-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;white-space:nowrap;overflow:hidden}
+.cc-sub{font-size:10px;color:var(--text3);font-weight:400;margin-left:6px;flex-shrink:0}
 
 /* TYPES */
-.types-main{display:grid;grid-template-columns:1fr 300px;gap:14px}
-.types-list{display:flex;flex-direction:column;gap:8px}
-.type-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.types-main{display:grid;grid-template-columns:1fr 280px;gap:14px;align-items:start}
+.types-list{display:flex;flex-direction:column;gap:7px;min-width:0}
+.type-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s;min-width:0}
 .type-card:hover{border-color:#2a2a35}
-.type-header{padding:16px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.type-header{padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;min-width:0}
 .type-header:hover{background:rgba(255,255,255,.015)}
-.tdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.tinfo{flex:1;min-width:0}
-.tname{font-size:14px;font-weight:700}
-.tstats{display:flex;gap:14px;margin-top:3px;flex-wrap:wrap}
-.tstat{font-size:11px;color:var(--text3)}
+.tdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.tinfo{flex:1;min-width:0;overflow:hidden}
+.tname{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tstats{display:flex;gap:12px;margin-top:3px;flex-wrap:wrap}
+.tstat{font-size:11px;color:var(--text3);white-space:nowrap}
 .tstat b{color:var(--text2);font-weight:600}
-.tpct{font-size:12px;font-weight:800;padding:3px 9px;border-radius:7px;white-space:nowrap;flex-shrink:0}
-.tarrow{font-size:10px;color:var(--text3);transition:transform .25s;flex-shrink:0;margin-left:6px}
+.tpct{font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+.tarrow{font-size:10px;color:var(--text3);transition:transform .25s;flex-shrink:0;margin-left:4px}
 .type-card.open .tarrow{transform:rotate(180deg)}
-.type-assets{display:none;border-top:1px solid var(--border);padding:8px 12px}
+.type-assets{display:none;border-top:1px solid var(--border);padding:6px 10px}
 .type-card.open .type-assets{display:block}
-.asset-row{display:flex;align-items:center;gap:8px;padding:7px 6px;border-radius:7px;transition:background .15s}
+.asset-row{display:flex;align-items:center;gap:8px;padding:6px 6px;border-radius:6px;transition:background .15s;min-width:0}
 .asset-row:hover{background:rgba(255,255,255,.025)}
 .a-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;opacity:.5}
-.a-name{flex:1;font-size:12px;color:var(--text2);font-weight:500}
-.a-vals{display:flex;gap:10px;align-items:center;font-size:11px}
-.a-sum{color:var(--text);font-weight:700}
-.a-mes{color:var(--text3)}
-.a-pct{padding:1px 6px;border-radius:5px;font-size:10px;font-weight:700}
+.a-name{flex:1;font-size:11px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.a-vals{display:flex;gap:8px;align-items:center;font-size:11px;flex-shrink:0}
+.a-sum{color:var(--text);font-weight:700;white-space:nowrap}
+.a-mes{color:var(--text3);white-space:nowrap}
+.a-pct{padding:1px 5px;border-radius:4px;font-size:10px;font-weight:700;white-space:nowrap}
 
-/* PIE LEGEND */
-.chart-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px}
-.legend{display:flex;flex-direction:column;gap:6px;width:100%}
-.li{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2)}
+/* PIE */
+.chart-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.legend{display:flex;flex-direction:column;gap:5px;width:100%}
+.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);min-width:0}
 .ld{width:8px;height:8px;border-radius:2px;flex-shrink:0}
-.lp{margin-left:auto;color:var(--text);font-weight:700;font-size:11px}
+.ln{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.lp{margin-left:auto;color:var(--text);font-weight:700;font-size:11px;flex-shrink:0}
 
 /* REBALANCE */
 .reb-list{display:flex;flex-direction:column;gap:8px}
-.reb-row{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
-.reb-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.reb-row{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;min-width:0}
+.reb-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;min-width:0}
 .rdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.rname{font-size:14px;font-weight:700;flex:1}
-.rind{font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px}
+.rname{font-size:13px;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rind{font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
 .ibuy{background:rgba(34,197,94,.12);color:var(--green)}
 .isell{background:rgba(239,68,68,.12);color:var(--red)}
 .iok{background:rgba(59,130,246,.12);color:var(--blue)}
-.reb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.reb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .rs-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
-.rs-val{font-size:20px;font-weight:800}
-.rs-sub{font-size:10px;color:var(--text3);margin-top:2px}
+.rs-val{font-size:19px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs-sub{font-size:10px;color:var(--text3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar-bg{height:5px;background:var(--bg4);border-radius:3px;margin-top:7px;overflow:hidden}
 .bar-fill{height:100%;border-radius:3px;transition:width .7s ease}
 
 /* SETTINGS */
 .settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center}
 .settings-overlay.open{display:flex}
-.sp{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:28px;width:480px;max-height:80vh;overflow-y:auto}
-.sp-title{font-size:18px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.sp{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:26px;width:460px;max-height:80vh;overflow-y:auto}
+.sp-title{font-size:17px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
 .sp-close{background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer}
 .sp-close:hover{color:var(--text)}
 .sp h3{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
 .goal-row-sp{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.goal-dot-sp{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.goal-dot-sp{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .goal-name-sp{flex:1;font-size:13px;font-weight:600}
 .goal-cur-sp{font-size:11px;color:var(--text3);min-width:70px;text-align:right}
 .goal-inp{background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:13px;font-weight:700;padding:6px 10px;width:110px;outline:none}
@@ -129,34 +124,28 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px}
 .spin{width:40px;height:40px;border:3px solid #1a1a1a;border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.ltxt{font-size:14px;color:var(--text2)}
-.err-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:14px;color:var(--red);font-size:12px}
-
-/* DIVIDERS */
-.tag{display:inline-block;padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700}
+.ltxt{font-size:13px;color:var(--text2)}
+.err-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:12px;color:var(--red);font-size:12px}
 </style>
 </head>
 <body>
 
 <div class="overlay" id="ov">
   <div class="spin"></div>
-  <div class="ltxt">Загружаем данные из Google Sheets…</div>
+  <div class="ltxt">Загружаем данные…</div>
 </div>
 
 <div class="settings-overlay" id="sov" onclick="closeSov(event)">
-  <div class="sp" id="sp">
+  <div class="sp">
     <div class="sp-title">⚙️ Настройки <button class="sp-close" onclick="closeSP()">✕</button></div>
     <h3>🎯 Цели по типам ($)</h3>
     <div id="goalsForm"></div>
-    <div class="sp-hint">Цели используются в блоке ребалансировки и расчёте прогресса.</div>
+    <div class="sp-hint">Цели используются в блоке ребалансировки.</div>
   </div>
 </div>
 
 <div class="header">
-  <div class="logo">
-    Piura <span class="fam">Family</span> Found
-    <span class="sub">Investment Dashboard</span>
-  </div>
+  <div class="logo">Piura <span class="fam">Family</span> Found<span class="sub">Investment Dashboard</span></div>
   <div class="hm">
     <span class="upd" id="upd">—</span>
     <button class="btn btn-ghost" onclick="openSP()">⚙️ Цели</button>
@@ -167,40 +156,48 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <div class="wrap">
   <div id="err" style="display:none" class="err-box"></div>
 
-  <!-- ROW 1: 4 главных метрики -->
   <div class="metrics-grid" id="m1"></div>
-
-  <!-- ROW 2: 4 доп метрики -->
   <div class="metrics-grid" id="m2"></div>
 
-  <!-- 5 МАЛЕНЬКИХ ГРАФИКОВ -->
   <div>
     <div class="sec-title">Структура портфеля</div>
-    <div class="charts-5" id="charts5"></div>
+    <div class="charts-4">
+      <div class="chart-card">
+        <div class="cc-title">По типу актива <span class="cc-sub">доля %</span></div>
+        <div style="position:relative;height:280px"><canvas id="c_type"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="cc-title">По уровню риска <span class="cc-sub">доля %</span></div>
+        <div style="position:relative;height:280px"><canvas id="c_risk"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="cc-title">По валюте <span class="cc-sub">доля %</span></div>
+        <div style="position:relative;height:280px"><canvas id="c_curr"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="cc-title">По ликвидности <span class="cc-sub">доля %</span></div>
+        <div style="position:relative;height:280px"><canvas id="c_liq"></canvas></div>
+      </div>
+    </div>
   </div>
 
-  <!-- 3 БОЛЬШИХ ГРАФИКА -->
-  <div class="charts-3" id="charts3"></div>
-
-  <!-- АКТИВЫ ПО ТИПАМ -->
   <div>
     <div class="sec-title">Активы по типам <small>— нажми для раскрытия</small></div>
     <div class="types-main">
       <div class="types-list" id="tlist"></div>
       <div class="chart-box">
-        <div style="position:relative;width:240px;height:240px"><canvas id="c_pie"></canvas></div>
+        <div style="position:relative;width:220px;height:220px"><canvas id="c_pie"></canvas></div>
         <div class="legend" id="leg"></div>
       </div>
     </div>
   </div>
 
-  <!-- РЕБАЛАНСИРОВКА -->
   <div>
     <div class="sec-title">Ребалансировка</div>
     <div class="reb-list" id="rlist"></div>
   </div>
 
-  <div style="text-align:center;padding:14px 0;font-size:10px;color:var(--text3)">
+  <div style="text-align:center;padding:12px 0;font-size:10px;color:var(--text3)">
     Piura Family Found · Данные из Google Sheets · Автообновление каждые 5 мин
   </div>
 </div>
@@ -217,29 +214,48 @@ const TYPES = [
   {id:'realty', name:'Инвест. недвижимость', color:'#f97316', typ:'Инвест. недвижимость'},
 ];
 
-let CH = [], _td=null, _total=0, _assets=[], _rows=[];
+let CH=[], _td=null, _total=0, _assets=[];
 
-const fmt = n => {
-  if(n===null||n===undefined) return '$0';
-  n=Math.round(n);
-  if(Math.abs(n)>=1000000) return '$'+(n/1000000).toFixed(2)+'M';
-  if(Math.abs(n)>=1000) return '$'+n.toLocaleString('ru');
-  return '$'+n;
-};
-const fp = n => n?n.toFixed(1)+'%':'0%';
-const loadGoals = () => { try{return JSON.parse(localStorage.getItem('pff_g')||'{}')}catch(e){return{}} };
-const saveGoal = (id,v) => { const g=loadGoals(); g[id]=v; localStorage.setItem('pff_g',JSON.stringify(g)); };
-const killCharts = (ids) => {
-  ids.forEach(id => {
-    const i = CH.findIndex(c=>c.canvas&&c.canvas.id===id);
-    if(i>=0){CH[i].destroy();CH.splice(i,1);}
-  });
-};
+const fmt=n=>{if(!n&&n!==0)return'$0';n=Math.round(n);if(Math.abs(n)>=1000000)return'$'+(n/1000000).toFixed(2)+'M';if(Math.abs(n)>=1000)return'$'+n.toLocaleString('ru');return'$'+n;};
+const fp=n=>n?n.toFixed(1)+'%':'0%';
+const loadGoals=()=>{try{return JSON.parse(localStorage.getItem('pff_g')||'{}')}catch(e){return{}}};
+const saveGoal=(id,v)=>{const g=loadGoals();g[id]=v;localStorage.setItem('pff_g',JSON.stringify(g));};
+const killChart=id=>{const i=CH.findIndex(c=>c.canvas&&c.canvas.id===id);if(i>=0){CH[i].destroy();CH.splice(i,1);}};
 
-// ── Settings ──
-function openSP(){
-  const goals=loadGoals();
-  document.getElementById('goalsForm').innerHTML=TYPES.map(t=>`
+function makeDoughnut(id, labels, vals, colors) {
+  killChart(id);
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  const total = vals.reduce((a,b)=>a+b,0);
+  CH.push(new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{ data: vals, backgroundColor: colors, borderWidth: 3, borderColor: '#0e0e12', hoverBorderColor: '#0e0e12' }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '58%',
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: { color: '#9ca3af', font: { size: 10 }, boxWidth: 10, padding: 8, usePointStyle: true }
+        },
+        tooltip: {
+          callbacks: {
+            label: x => ` ${x.label}: ${fmt(x.raw)} (${total>0?(x.raw/total*100).toFixed(1):'0'}%)`
+          }
+        }
+      }
+    }
+  }));
+}
+
+function openSP() {
+  const goals = loadGoals();
+  document.getElementById('goalsForm').innerHTML = TYPES.map(t=>`
     <div class="goal-row-sp">
       <div class="goal-dot-sp" style="background:${t.color}"></div>
       <div class="goal-name-sp">${t.name}</div>
@@ -249,109 +265,99 @@ function openSP(){
     </div>`).join('');
   document.getElementById('sov').classList.add('open');
 }
-function closeSP(){
+function closeSP() {
   document.getElementById('sov').classList.remove('open');
-  if(_td){renderReb(_td,_total);}
+  if (_td) renderReb(_td, _total);
 }
-function closeSov(e){if(e.target===document.getElementById('sov'))closeSP();}
+function closeSov(e) { if (e.target===document.getElementById('sov')) closeSP(); }
 
-// ── Load ──
-async function loadData(){
+async function loadData() {
   document.getElementById('rbtn').classList.add('loading');
-  document.getElementById('ov').style.display='flex';
-  document.getElementById('err').style.display='none';
-  try{
-    const r=await fetch(API+'?t='+Date.now());
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const data=await r.json();
+  document.getElementById('ov').style.display = 'flex';
+  document.getElementById('err').style.display = 'none';
+  try {
+    const r = await fetch(API + '?t=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
     process(data);
-    document.getElementById('upd').textContent='Обновлено: '+new Date().toLocaleString('ru');
-  }catch(e){
-    const eb=document.getElementById('err');
-    eb.style.display='block';
-    eb.textContent='Ошибка: '+e.message;
-  }finally{
-    document.getElementById('ov').style.display='none';
+    document.getElementById('upd').textContent = 'Обновлено: ' + new Date().toLocaleString('ru');
+  } catch(e) {
+    const eb = document.getElementById('err');
+    eb.style.display = 'block';
+    eb.textContent = 'Ошибка: ' + e.message;
+  } finally {
+    document.getElementById('ov').style.display = 'none';
     document.getElementById('rbtn').classList.remove('loading');
   }
 }
 
-// ── Process ──
-function process(data){
-  const pKey=Object.keys(data).find(k=>k==='2026 (PFF)');
-  const rows=pKey?data[pKey]:[];
-  _rows=rows;
+function process(data) {
+  const rows = data['2026 (PFF)'] || [];
+  const acc = {};
+  TYPES.forEach(t => { acc[t.id] = {summa:0,mes:0,ned:0,pctSum:0,pctCount:0,assets:[]}; });
 
-  const acc={};
-  TYPES.forEach(t=>{acc[t.id]={summa:0,mes:0,ned:0,pctSum:0,pctCount:0,assets:[]};});
+  const byRisk={}, byCurr={}, byLiq={};
+  let totalSumma=0, totalMes=0, totalNed=0, avgPct=0, foundItogo=false;
 
-  // Счётчики для доп. разбивок
-  const byRisk={}, byCurrency={}, byLiquidity={}, byCountry={};
-  let totalSumma=0,totalMes=0,totalNed=0,avgPct=0,foundItogo=false;
+  rows.forEach(row => {
+    const aktiv = String(row['АКТИВ']||'').trim();
+    const tip   = String(row['ТИП']||'').trim();
+    const risk  = String(row['Риск']||row['РИСК']||'').trim();
+    const curr  = String(row['Валюта']||row['ВАЛЮТА']||'').trim();
+    const liq   = String(row['Ликвидность']||row['ЛИКВИДНОСТЬ']||'').trim();
+    const summa = parseFloat(row['СУММА'])||0;
+    const pct   = parseFloat(row['%'])||0;
+    const mes   = parseFloat(row['МЕСЯЦ'])||0;
+    const ned   = parseFloat(row['НЕДЕЛЯ'])||0;
 
-  rows.forEach(row=>{
-    const aktiv    = String(row['АКТИВ']||'').trim();
-    const tip      = String(row['ТИП']||'').trim();
-    const risk     = String(row['Риск']||row['РИСК']||'').trim();
-    const currency = String(row['Валюта']||row['ВАЛЮТА']||'').trim();
-    const liquid   = String(row['Ликвидность']||row['ЛИКВИДНОСТЬ']||'').trim();
-    const summa    = parseFloat(row['СУММА'])||0;
-    const pct      = parseFloat(row['%'])||0;
-    const mes      = parseFloat(row['МЕСЯЦ'])||0;
-    const ned      = parseFloat(row['НЕДЕЛЯ'])||0;
-
-    if(aktiv==='ИТОГО'){
-      totalSumma=summa; totalMes=mes; totalNed=ned;
-      avgPct=pct*100; foundItogo=true; return;
+    if (aktiv === 'ИТОГО') {
+      totalSumma=summa; totalMes=mes; totalNed=ned; avgPct=pct*100; foundItogo=true; return;
     }
-    if(!aktiv||aktiv==='АКТИВ'||!tip) return;
+    if (!aktiv || aktiv==='АКТИВ' || !tip) return;
 
-    const typeObj=TYPES.find(t=>tip===t.typ||tip.toLowerCase()===t.typ.toLowerCase());
-    if(!typeObj) return;
+    const typeObj = TYPES.find(t => tip===t.typ || tip.toLowerCase()===t.typ.toLowerCase());
+    if (!typeObj) return;
 
-    acc[typeObj.id].summa+=summa;
-    acc[typeObj.id].mes+=mes;
-    acc[typeObj.id].ned+=ned;
-    if(pct>0){acc[typeObj.id].pctSum+=pct*100;acc[typeObj.id].pctCount++;}
-    acc[typeObj.id].assets.push({name:aktiv,summa,mes,ned,pct:pct*100,risk,currency,liquid});
+    acc[typeObj.id].summa += summa;
+    acc[typeObj.id].mes   += mes;
+    acc[typeObj.id].ned   += ned;
+    if (pct>0) { acc[typeObj.id].pctSum+=pct*100; acc[typeObj.id].pctCount++; }
+    acc[typeObj.id].assets.push({name:aktiv,summa,mes,ned,pct:pct*100,risk,curr,liq});
 
-    // Доп. разбивки
-    if(risk)     byRisk[risk]     = (byRisk[risk]||0)+summa;
-    if(currency) byCurrency[currency]=(byCurrency[currency]||0)+summa;
-    if(liquid)   byLiquidity[liquid]=(byLiquidity[liquid]||0)+summa;
+    if (risk) byRisk[risk] = (byRisk[risk]||0) + summa;
+    if (curr) byCurr[curr] = (byCurr[curr]||0) + summa;
+    if (liq)  byLiq[liq]   = (byLiq[liq]||0)   + summa;
   });
 
-  if(!foundItogo){
-    totalSumma=TYPES.reduce((a,t)=>a+acc[t.id].summa,0);
-    totalMes  =TYPES.reduce((a,t)=>a+acc[t.id].mes,0);
-    totalNed  =TYPES.reduce((a,t)=>a+acc[t.id].ned,0);
+  if (!foundItogo) {
+    totalSumma = TYPES.reduce((a,t)=>a+acc[t.id].summa,0);
+    totalMes   = TYPES.reduce((a,t)=>a+acc[t.id].mes,0);
+    totalNed   = TYPES.reduce((a,t)=>a+acc[t.id].ned,0);
   }
-  if(totalNed===0) totalNed=totalMes/4.33;
-  if(avgPct===0&&totalSumma>0) avgPct=totalMes*12/totalSumma*100;
+  if (totalNed===0) totalNed = totalMes/4.33;
+  if (avgPct===0 && totalSumma>0) avgPct = totalMes*12/totalSumma*100;
 
-  const td={};
-  TYPES.forEach(t=>{
-    const a=acc[t.id];
-    td[t.id]={
-      summa:a.summa, mes:a.mes, ned:a.ned, assets:a.assets,
-      pct:a.pctCount>0?a.pctSum/a.pctCount:(a.summa>0&&a.mes>0?a.mes*12/a.summa*100:0)
+  const td = {};
+  TYPES.forEach(t => {
+    const a = acc[t.id];
+    td[t.id] = {
+      summa: a.summa, mes: a.mes, ned: a.ned, assets: a.assets,
+      pct: a.pctCount>0 ? a.pctSum/a.pctCount : (a.summa>0&&a.mes>0 ? a.mes*12/a.summa*100 : 0)
     };
   });
 
   _td=td; _total=totalSumma;
-  _assets=TYPES.flatMap(t=>acc[t.id].assets.map(a=>({...a,typeId:t.id,color:t.color})));
+  _assets = TYPES.flatMap(t => acc[t.id].assets.map(a=>({...a,typeId:t.id,color:t.color})));
 
-  renderM1(totalSumma,totalMes,totalNed,avgPct);
-  renderM2(totalSumma,totalMes,totalNed,avgPct);
-  renderCharts5(td,totalSumma,byRisk,byCurrency,byLiquidity);
-  renderCharts3(td,totalSumma,totalMes);
-  renderTypes(td,totalSumma);
-  renderReb(td,totalSumma);
+  renderM1(totalSumma, totalMes, totalNed, avgPct);
+  renderM2(totalSumma, totalMes, totalNed, avgPct);
+  render4Charts(td, totalSumma, byRisk, byCurr, byLiq);
+  renderTypes(td, totalSumma);
+  renderReb(td, totalSumma);
 }
 
-// ── Метрики ряд 1 ──
-function renderM1(total,mes,ned,pct){
-  document.getElementById('m1').innerHTML=`
+function renderM1(total, mes, ned, pct) {
+  document.getElementById('m1').innerHTML = `
   <div class="metric" style="--accent:var(--blue)">
     <div class="ml">Портфель</div>
     <div class="mv">${fmt(total)}</div>
@@ -374,215 +380,97 @@ function renderM1(total,mes,ned,pct){
   </div>`;
 }
 
-// ── Метрики ряд 2 ──
-function renderM2(total,mes,ned,pct){
-  const goals=loadGoals();
-  const goalTotal=TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
-  const goalPct=goalTotal>0?Math.min(100,total/goalTotal*100):0;
+function renderM2(total, mes, ned, pct) {
+  const goals = loadGoals();
+  const goalTotal = TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
+  const goalPct = goalTotal>0 ? Math.min(100,total/goalTotal*100) : 0;
 
-  // Сложный процент: FV = PV*(1+r)^n, доход уже внутри ставки
-  const r=pct/100/12;
-  let months1M=null;
-  if(r>0&&total<1000000){
-    let lo=0,hi=600;
-    while(lo<hi){
-      const mid=Math.floor((lo+hi)/2);
-      const fv=total*Math.pow(1+r,mid);
-      if(fv>=1000000)hi=mid; else lo=mid+1;
+  // Сложный процент FV = PV*(1+r)^n
+  const r = pct/100/12;
+  let months1M = null;
+  if (r>0 && total<1000000) {
+    let lo=0, hi=600;
+    while (lo<hi) {
+      const mid = Math.floor((lo+hi)/2);
+      if (total*Math.pow(1+r,mid)>=1000000) hi=mid; else lo=mid+1;
     }
-    months1M=lo;
+    months1M = lo;
   }
 
-  const months1MStr=total>=1000000?'✓ Достигнут':months1M?`${months1M} мес`:'—';
-  const dailyInc=mes/30;
-  const activeCount=_assets.length;
-  const highRiskPct=_assets.length>0?(_assets.filter(a=>a.risk==='Высокий').reduce((s,a)=>s+a.summa,0)/total*100):0;
+  const m1str = total>=1000000 ? '✓ Достигнут' : months1M ? `${months1M} мес` : '—';
+  const highRisk = _assets.filter(a=>a.risk==='Высокий').reduce((s,a)=>s+a.summa,0);
+  const highRiskPct = total>0 ? highRisk/total*100 : 0;
 
-  document.getElementById('m2').innerHTML=`
+  document.getElementById('m2').innerHTML = `
   <div class="metric" style="--accent:var(--green)">
     <div class="ml">Прогресс к цели</div>
-    <div class="mv" style="color:var(--green)">${goalTotal>0?goalPct.toFixed(1)+'%':'—'}</div>
-    <div class="ms">${goalTotal>0?fmt(total)+' из '+fmt(goalTotal):'Задай цели ⚙️'}</div>
-    ${goalTotal>0?`<div class="progress-bar-thin"><div class="pb-fill" style="width:${goalPct}%;background:var(--green)"></div></div>`:''}
+    <div class="mv" style="color:var(--green)">${goalTotal>0 ? goalPct.toFixed(1)+'%' : '—'}</div>
+    <div class="ms">${goalTotal>0 ? fmt(total)+' из '+fmt(goalTotal) : 'Задай цели ⚙️'}</div>
+    ${goalTotal>0 ? `<div class="progress-bar-thin"><div class="pb-fill" style="width:${goalPct}%;background:var(--green)"></div></div>` : ''}
   </div>
   <div class="metric" style="--accent:var(--cyan)">
     <div class="ml">Доход в день</div>
-    <div class="mv" style="color:var(--cyan)">${fmt(dailyInc)}</div>
+    <div class="mv" style="color:var(--cyan)">${fmt(mes/30)}</div>
     <div class="ms">${fmt(mes*12)} / год · ${fmt(ned)} / неделю</div>
-    <div class="progress-bar-thin"><div class="pb-fill" style="width:${Math.min(100,pct/40*100)}%;background:var(--cyan)"></div></div>
   </div>
   <div class="metric" style="--accent:var(--yellow)">
     <div class="ml">До $1 млн (сложный %)</div>
-    <div class="mv" style="color:var(--yellow)">${months1MStr}</div>
-    <div class="ms">${total<1000000&&months1M?`при ставке ${pct.toFixed(1)}% + реинвест`:'все доходы реинвестируются'}</div>
+    <div class="mv" style="color:var(--yellow)">${m1str}</div>
+    <div class="ms">${total<1000000&&months1M ? `ставка ${pct.toFixed(1)}% + реинвест` : 'все доходы реинвестируются'}</div>
     <div class="progress-bar-thin"><div class="pb-fill" style="width:${Math.min(100,total/1000000*100)}%;background:var(--yellow)"></div></div>
   </div>
   <div class="metric" style="--accent:var(--red)">
     <div class="ml">Высокий риск</div>
     <div class="mv" style="color:${highRiskPct>50?'var(--red)':highRiskPct>30?'var(--yellow)':'var(--green)'}">${highRiskPct.toFixed(1)}%</div>
-    <div class="ms">${activeCount} активов · ${fmt(_assets.filter(a=>a.risk==='Высокий').reduce((s,a)=>s+a.summa,0))} в высоком риске</div>
+    <div class="ms">${fmt(highRisk)} из ${fmt(total)}</div>
     <div class="progress-bar-thin"><div class="pb-fill" style="width:${highRiskPct}%;background:var(--red)"></div></div>
   </div>`;
 }
 
-// ── 5 маленьких графиков ──
-function renderCharts5(td,total,byRisk,byCurrency,byLiquidity){
-  killCharts(['c5a','c5b','c5c','c5d','c5e']);
+function render4Charts(td, total, byRisk, byCurr, byLiq) {
+  // 1. По типу
+  makeDoughnut('c_type',
+    TYPES.map(t=>t.name),
+    TYPES.map(t=>td[t.id].summa),
+    TYPES.map(t=>t.color)
+  );
 
-  const makeD=(id,labels,vals,colors,title,sub)=>`
-    <div class="chart-card">
-      <div class="cc-title">${title} <span class="cc-sub">${sub}</span></div>
-      <div style="position:relative;height:160px"><canvas id="${id}"></canvas></div>
-    </div>`;
+  // 2. По риску
+  const rKeys = Object.keys(byRisk);
+  const rColors = {'Высокий':'#ef4444','Средний':'#f97316','Низкий':'#22c55e'};
+  makeDoughnut('c_risk', rKeys, rKeys.map(k=>byRisk[k]), rKeys.map(k=>rColors[k]||'#888'));
 
-  document.getElementById('charts5').innerHTML=
-    makeD('c5a','','','','По типу','доля %')+
-    makeD('c5b','','','','По риску','% портфеля')+
-    makeD('c5c','','','','По валюте','% портфеля')+
-    makeD('c5d','','','','По ликвидности','% портфеля')+
-    makeD('c5e','','','','Доходность/тип','% годовых');
+  // 3. По валюте
+  const cKeys = Object.keys(byCurr);
+  const cColors = {'Доллар':'#3b82f6','Рубль':'#a855f7','Евро':'#06b6d4','Крипто':'#eab308'};
+  makeDoughnut('c_curr', cKeys, cKeys.map(k=>byCurr[k]), cKeys.map(k=>cColors[k]||'#888'));
 
-  const doCan=(id,labels,vals,colors,type='doughnut',opts={})=>{
-    const ctx=document.getElementById(id);
-    if(!ctx)return;
-    CH.push(new Chart(ctx,{
-      type,
-      data:{labels,datasets:[{data:vals,backgroundColor:colors,borderWidth:2,borderColor:'#0e0e12',borderRadius:type==='bar'?4:0}]},
-      options:{
-        responsive:true,maintainAspectRatio:false,cutout:type==='doughnut'?'60%':undefined,
-        indexAxis:opts.horizontal?'y':undefined,
-        plugins:{legend:{display:type==='doughnut',position:'right',labels:{color:'#6b7280',font:{size:9},boxWidth:8,padding:6}},
-          tooltip:{callbacks:{label:x=>`${x.label||''}: ${type==='doughnut'?((x.raw/vals.reduce((a,b)=>a+b,0))*100).toFixed(1)+'%':x.raw.toFixed(1)+'%'}`}}},
-        scales:type==='bar'?{
-          x:{ticks:{color:'#4b5563',font:{size:9},callback:v=>v+'%'},grid:{color:'#1a1a1a'}},
-          y:{ticks:{color:'#9ca3af',font:{size:9}},grid:{display:false}}
-        }:undefined,
-        ...opts
-      }
-    }));
-  };
-
-  // По типу
-  const tVals=TYPES.map(t=>td[t.id].summa);
-  doCan('c5a',TYPES.map(t=>t.name.split('/')[0]),tVals,TYPES.map(t=>t.color));
-
-  // По риску
-  const rK=Object.keys(byRisk);
-  const rColors={'Высокий':'#ef4444','Средний':'#f97316','Низкий':'#22c55e'};
-  doCan('c5b',rK,rK.map(k=>byRisk[k]),rK.map(k=>rColors[k]||'#888'));
-
-  // По валюте
-  const cK=Object.keys(byCurrency);
-  const cColors={'Доллар':'#3b82f6','Рубль':'#a855f7','Евро':'#06b6d4','Крипто':'#eab308'};
-  doCan('c5c',cK,cK.map(k=>byCurrency[k]),cK.map(k=>cColors[k]||'#888'));
-
-  // По ликвидности
-  const lK=Object.keys(byLiquidity);
-  const lColors={'Высокая':'#22c55e','Средняя':'#eab308','Низкая':'#ef4444','Вы':'#22c55e'};
-  doCan('c5d',lK,lK.map(k=>byLiquidity[k]),lK.map(k=>lColors[k]||'#888'));
-
-  // Доходность по типам — bar
-  const yData=TYPES.filter(t=>td[t.id].pct>0).sort((a,b)=>td[b.id].pct-td[a.id].pct);
-  const ctx5e=document.getElementById('c5e');
-  if(ctx5e){
-    CH.push(new Chart(ctx5e,{
-      type:'bar',
-      data:{
-        labels:yData.map(t=>t.name.length>12?t.name.slice(0,12)+'…':t.name),
-        datasets:[{data:yData.map(t=>td[t.id].pct),backgroundColor:yData.map(t=>t.color+'cc'),borderRadius:4,borderSkipped:false}]
-      },
-      options:{
-        indexAxis:'y',responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>` ${x.raw.toFixed(1)}% годовых`}}},
-        scales:{
-          x:{ticks:{color:'#4b5563',font:{size:9},callback:v=>v+'%'},grid:{color:'#1a1a1a'}},
-          y:{ticks:{color:'#9ca3af',font:{size:9}},grid:{display:false}}
-        }
-      }
-    }));
-  }
+  // 4. По ликвидности
+  const lKeys = Object.keys(byLiq);
+  const lColors = {'Высокая':'#22c55e','Средняя':'#eab308','Низкая':'#ef4444','Вы':'#22c55e'};
+  makeDoughnut('c_liq', lKeys, lKeys.map(k=>byLiq[k]), lKeys.map(k=>lColors[k]||'#888'));
 }
 
-// ── 3 больших графика ──
-function renderCharts3(td,total,totalMes){
-  killCharts(['c3a','c3b','c3c']);
-  document.getElementById('charts3').innerHTML=`
-    <div class="chart-card span2">
-      <div class="cc-title">Доход / месяц по типам <span class="cc-sub">детализация $</span></div>
-      <div style="position:relative;height:200px"><canvas id="c3a"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="cc-title">Риск / доходность <span class="cc-sub">пузырьки</span></div>
-      <div style="position:relative;height:200px"><canvas id="c3b"></canvas></div>
-    </div>`;
-
-  // Горизонтальный бар — доход/мес по типам
-  const incData=TYPES.filter(t=>td[t.id].mes>0).sort((a,b)=>td[b.id].mes-td[a.id].mes);
-  const ctx3a=document.getElementById('c3a');
-  if(ctx3a){
-    CH.push(new Chart(ctx3a,{
-      type:'bar',
-      data:{
-        labels:incData.map(t=>t.name),
-        datasets:[{
-          data:incData.map(t=>td[t.id].mes),
-          backgroundColor:incData.map(t=>t.color+'bb'),
-          borderRadius:6,borderSkipped:false
-        }]
-      },
-      options:{
-        indexAxis:'y',responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>` ${fmt(x.raw)}/мес`}}},
-        scales:{
-          x:{ticks:{color:'#4b5563',font:{size:10},callback:v=>fmt(v)},grid:{color:'#1a1a1a'}},
-          y:{ticks:{color:'#9ca3af',font:{size:11}},grid:{display:false}}
-        }
-      }
-    }));
-  }
-
-  // Пузырьки — риск/доходность
-  const ctx3b=document.getElementById('c3b');
-  if(ctx3b){
-    CH.push(new Chart(ctx3b,{
-      type:'bubble',
-      data:{datasets:TYPES.filter(t=>td[t.id].summa>0).map(t=>({
-        label:t.name,
-        data:[{x:td[t.id].pct,y:total>0?td[t.id].summa/total*100:0,r:Math.max(5,Math.sqrt(td[t.id].summa/total)*38)}],
-        backgroundColor:t.color+'88',borderColor:t.color,borderWidth:2
-      }))},
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>`${x.dataset.label}: ${x.raw.x.toFixed(1)}% доход, ${x.raw.y.toFixed(1)}% доля`}}},
-        scales:{
-          x:{title:{display:true,text:'Доходность %',color:'#4b5563',font:{size:9}},ticks:{color:'#4b5563',font:{size:9},callback:v=>v+'%'},grid:{color:'#1a1a1a'}},
-          y:{title:{display:true,text:'Доля %',color:'#4b5563',font:{size:9}},ticks:{color:'#4b5563',font:{size:9},callback:v=>v+'%'},grid:{color:'#1a1a1a'}}
-        }
-      }
-    }));
-  }
-}
-
-// ── Типы (expandable) ──
-function renderTypes(td,total){
-  document.getElementById('tlist').innerHTML=TYPES.map(t=>{
-    const d=td[t.id];
-    const pc=d.pct;
-    const clr=pc>=25?'#a855f7':pc>=12?'#22c55e':pc>=4?'#3b82f6':'#4b5563';
-    const assetsHtml=d.assets.length>0
-      ?d.assets.sort((a,b)=>b.summa-a.summa).map(a=>{
-        const ap=a.pct>0?a.pct:(a.summa>0&&a.mes>0?a.mes*12/a.summa*100:0);
-        const aclr=ap>=30?'#a855f7':ap>=15?'#22c55e':ap>=4?'#3b82f6':'#4b5563';
-        return `<div class="asset-row">
-          <div class="a-dot" style="background:${t.color}"></div>
-          <div class="a-name">${a.name}</div>
-          <div class="a-vals">
-            <span class="a-sum">${fmt(a.summa)}</span>
-            <span class="a-mes">${a.mes>0?fmt(a.mes)+'/мес':'$0/мес'}</span>
-            ${ap>0?`<span class="a-pct" style="background:${aclr}18;color:${aclr}">${ap.toFixed(1)}%</span>`:'<span class="a-pct" style="background:#1a1a1a;color:#4b5563">0%</span>'}
-          </div>
-        </div>`;}).join('')
-      :'<div style="padding:8px 6px;color:var(--text3);font-size:12px">Нет активов</div>';
+function renderTypes(td, total) {
+  document.getElementById('tlist').innerHTML = TYPES.map(t => {
+    const d = td[t.id];
+    const pc = d.pct;
+    const clr = pc>=25?'#a855f7':pc>=12?'#22c55e':pc>=4?'#3b82f6':'#4b5563';
+    const assetsHtml = d.assets.length>0
+      ? d.assets.sort((a,b)=>b.summa-a.summa).map(a => {
+          const ap = a.pct>0 ? a.pct : (a.summa>0&&a.mes>0 ? a.mes*12/a.summa*100 : 0);
+          const aclr = ap>=30?'#a855f7':ap>=15?'#22c55e':ap>=4?'#3b82f6':'#4b5563';
+          return `<div class="asset-row">
+            <div class="a-dot" style="background:${t.color}"></div>
+            <div class="a-name">${a.name}</div>
+            <div class="a-vals">
+              <span class="a-sum">${fmt(a.summa)}</span>
+              <span class="a-mes">${fmt(a.mes)}/мес</span>
+              <span class="a-pct" style="background:${aclr}18;color:${aclr}">${ap>0?ap.toFixed(1)+'%':'0%'}</span>
+            </div>
+          </div>`;
+        }).join('')
+      : '<div style="padding:7px 6px;color:var(--text3);font-size:11px">Нет активов</div>';
 
     return `<div class="type-card" id="tc_${t.id}">
       <div class="type-header" onclick="toggleType('${t.id}')">
@@ -592,7 +480,7 @@ function renderTypes(td,total){
           <div class="tstats">
             <div class="tstat">Сумма: <b>${fmt(d.summa)}</b></div>
             <div class="tstat">Доход: <b>${fmt(d.mes)}/мес</b></div>
-            ${d.assets.length>0?`<div class="tstat">${d.assets.length} актив${d.assets.length>1?d.assets.length>4?'ов':'а':''}</div>`:''}
+            ${d.assets.length>0?`<div class="tstat">${d.assets.length} актив${d.assets.length>4?'ов':d.assets.length>1?'а':''}</div>`:''}
           </div>
         </div>
         <div class="tpct" style="background:${clr}18;color:${clr}">${fp(pc)}</div>
@@ -602,42 +490,53 @@ function renderTypes(td,total){
     </div>`;
   }).join('');
 
-  // Pie
-  killCharts(['c_pie']);
-  const ctx=document.getElementById('c_pie');
-  if(ctx){
-    CH.push(new Chart(ctx,{
-      type:'doughnut',
-      data:{labels:TYPES.map(t=>t.name),datasets:[{data:TYPES.map(t=>td[t.id].summa),backgroundColor:TYPES.map(t=>t.color),borderWidth:3,borderColor:'#0e0e12'}]},
-      options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>` ${x.label}: ${fmt(x.raw)} (${total>0?(x.raw/total*100).toFixed(1):0}%)`}}}}
+  killChart('c_pie');
+  const ctx = document.getElementById('c_pie');
+  if (ctx) {
+    CH.push(new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: TYPES.map(t=>t.name),
+        datasets: [{ data: TYPES.map(t=>td[t.id].summa), backgroundColor: TYPES.map(t=>t.color), borderWidth: 3, borderColor: '#0e0e12' }]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false, cutout:'62%',
+        plugins: {
+          legend: { display:false },
+          tooltip: { callbacks: { label: x => ` ${x.label}: ${fmt(x.raw)} (${total>0?(x.raw/total*100).toFixed(1):0}%)` } }
+        }
+      }
     }));
   }
-  document.getElementById('leg').innerHTML=TYPES.map(t=>{
-    const sh=total>0?(td[t.id].summa/total*100):0;
-    return `<div class="li"><div class="ld" style="background:${t.color}"></div><span>${t.name}</span><span class="lp">${sh.toFixed(1)}%</span></div>`;
+
+  document.getElementById('leg').innerHTML = TYPES.map(t => {
+    const sh = total>0 ? (td[t.id].summa/total*100) : 0;
+    return `<div class="li">
+      <div class="ld" style="background:${t.color}"></div>
+      <span class="ln">${t.name}</span>
+      <span class="lp">${sh.toFixed(1)}%</span>
+    </div>`;
   }).join('');
 }
 
-function toggleType(id){document.getElementById('tc_'+id).classList.toggle('open');}
+function toggleType(id) { document.getElementById('tc_'+id).classList.toggle('open'); }
 
-// ── Rebalance ──
-function renderReb(td,total){
-  const goals=loadGoals();
-  const gTotal=TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
-  document.getElementById('rlist').innerHTML=TYPES.map(t=>{
-    const d=td[t.id];
-    const curPct=total>0?(d.summa/total*100):0;
-    const gAmt=parseFloat(goals[t.id])||0;
-    const gPct=gTotal>0?(gAmt/gTotal*100):0;
-    const delta=gAmt>0?(d.summa-gAmt):0;
-    const dPct=gAmt>0?((d.summa-gAmt)/gAmt*100):0;
-    const maxP=Math.max(curPct,gPct,1);
+function renderReb(td, total) {
+  const goals = loadGoals();
+  const gTotal = TYPES.reduce((a,t)=>a+(parseFloat(goals[t.id])||0),0);
+  document.getElementById('rlist').innerHTML = TYPES.map(t => {
+    const d = td[t.id];
+    const curPct = total>0 ? (d.summa/total*100) : 0;
+    const gAmt   = parseFloat(goals[t.id])||0;
+    const gPct   = gTotal>0 ? (gAmt/gTotal*100) : 0;
+    const delta  = gAmt>0 ? (d.summa-gAmt) : 0;
+    const dPct   = gAmt>0 ? ((d.summa-gAmt)/gAmt*100) : 0;
+    const maxP   = Math.max(curPct,gPct,1);
     let cls,txt;
-    if(!gAmt)              {cls='iok'; txt='Задай цель в настройках ⚙️';}
-    else if(delta<-gAmt*.05){cls='ibuy';txt=`↑ Докупить ${fmt(Math.abs(delta))}`;}
-    else if(delta>gAmt*.05) {cls='isell';txt=`↓ Сократить ${fmt(delta)}`;}
-    else                    {cls='iok'; txt='✓ В норме';}
+    if (!gAmt)               {cls='iok'; txt='Задай цель в настройках ⚙️';}
+    else if (delta<-gAmt*.05){cls='ibuy'; txt=`↑ Докупить ${fmt(Math.abs(delta))}`;}
+    else if (delta>gAmt*.05) {cls='isell'; txt=`↓ Сократить ${fmt(delta)}`;}
+    else                     {cls='iok'; txt='✓ В норме';}
     return `<div class="reb-row">
       <div class="reb-head">
         <div class="rdot" style="background:${t.color}"></div>
@@ -659,9 +558,7 @@ function renderReb(td,total){
         </div>
         <div>
           <div class="rs-label">Дельта</div>
-          <div class="rs-val" style="color:${delta<0?'var(--green)':delta>0?'var(--red)':'var(--text2)'}">
-            ${gAmt?(delta>0?'+':'')+fmt(delta):'—'}
-          </div>
+          <div class="rs-val" style="color:${delta<0?'var(--green)':delta>0?'var(--red)':'var(--text2)'}">${gAmt?(delta>0?'+':'')+fmt(delta):'—'}</div>
           <div class="rs-sub">${gAmt?(dPct>0?'+':'')+dPct.toFixed(1)+'% от цели':''}</div>
           <div class="bar-bg"><div class="bar-fill" style="width:${gAmt?Math.min(100,Math.abs(dPct)):0}%;background:${delta<0?'var(--green)':'var(--red)'}"></div></div>
         </div>
@@ -676,7 +573,7 @@ window.closeSP=closeSP;
 window.closeSov=closeSov;
 window.saveGoal=saveGoal;
 
-setInterval(loadData,5*60*1000);
+setInterval(loadData, 5*60*1000);
 loadData();
 </script>
 </body>
